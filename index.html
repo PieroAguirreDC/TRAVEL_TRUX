@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelTrux - Agencia de Viajes</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Fuente Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- =======================
+         NAVBAR / CINTA SUPERIOR
+    ======================== -->
+    <header>
+        <nav>
+            <button class="nav-btn active" onclick="window.location.href='index.html'">Inicio</button>
+
+            <!-- Manteniendo paquetes como vista interna -->
+            <button class="nav-btn" data-view="paquetes">Paquetes</button>
+
+            <!-- Ahora sí llevan a sus propias páginas -->
+            <button class="nav-btn" onclick="window.location.href='login.html'">Iniciar Sesión</button>
+            <button class="nav-btn" onclick="window.location.href='register.html'">Registrarse</button>
+        </nav>
+    </header>
+
+
+    <!-- =======================
+            CONTENIDO PRINCIPAL
+    ======================== -->
+    <main>
+
+        <!-- =======================
+               VISTA: BIENVENIDA
+        ======================== -->
+        <div id="bienvenida-view" class="view active">
+            <div class="card" style="
+                display:flex; 
+                align-items:center; 
+                gap:30px; 
+                justify-content:space-between;
+                flex-wrap:nowrap;
+            ">
+
+                <!-- Texto de bienvenida -->
+                <div style="max-width:55%;">
+                    <h1>Bienvenido a <span>TravelTrux</span></h1>
+                    <p style="font-size:17px; line-height:1.5;">
+                        Descubre destinos increíbles, compra paquetes turísticos y vive experiencias únicas.
+                    </p>
+                </div>
+
+                <!-- Logo al costado -->
+                <img 
+                    src="logo Travel.png"
+                    alt="Logo TravelTrux"
+                    style="
+                        width:160px; 
+                        height:auto; 
+                        object-fit:contain;
+                    ">
+            </div>
+        </div>
+
+
+
+        <!-- =======================
+               VISTA: PAQUETES
+               (la dejamos EXACTAMENTE como estaba)
+        ======================== -->
+        <div id="paquetes-view" class="view">
+            <h1>Paquetes Turísticos</h1>
+            <p>Explora nuestras ofertas y descubre el destino ideal para tu próxima aventura.</p>
+
+            <div id="paquetes-lista" style="margin-top:25px;"></div>
+        </div>
+
+    </main>
+
+
+    <!-- =======================
+            ARCHIVO JS PRINCIPAL
+    ======================== -->
+    <script src="app.js"></script>
+
+</body>
+</html>

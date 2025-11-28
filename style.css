@@ -1,0 +1,168 @@
+/* ---------------------------
+   PALETA DE COLORES TRAVELTRUX
+---------------------------- */
+:root {
+    --orange-light: #F6A329;
+    --orange-dark: #E46A1F;
+    --blue-dark: #0F375A;
+    --blue-medium: #0A5C8F;
+    --blue-light: #1F82C0;
+    --bg-light: #F8F8F8;
+    --white: #FFFFFF;
+}
+
+/* ---------------------------
+   ESTILOS GENERALES
+---------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: var(--bg-light);
+    color: var(--blue-dark);
+}
+
+/* ---------------------------
+   HEADER - CINTA DE OPCIONES
+---------------------------- */
+header {
+    background: var(--blue-dark);
+    padding: 15px 0;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.15);
+}
+
+header nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px 16px;
+    border-radius: 6px;
+    transition: 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: var(--blue-light);
+}
+
+.nav-btn.active {
+    background: var(--orange-light);
+    color: var(--blue-dark);
+    font-weight: bold;
+}
+
+/* ---------------------------
+   VIEWS
+---------------------------- */
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+    padding: 50px 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------------------
+   TARJETAS / SECCIONES
+---------------------------- */
+.card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    margin: 20px auto;
+    max-width: 900px;
+}
+
+/* ---------------------------
+   BOTONES
+---------------------------- */
+.btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s ease;
+}
+
+/* Botón naranja principal */
+.btn-primary {
+    background: var(--orange-light);
+    color: var(--blue-dark);
+}
+
+.btn-primary:hover {
+    background: var(--orange-dark);
+}
+
+/* Botón azul */
+.btn-blue {
+    background: var(--blue-medium);
+    color: white;
+}
+
+.btn-blue:hover {
+    background: var(--blue-light);
+}
+
+/* ---------------------------
+   FORMULARIOS
+---------------------------- */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+}
+
+input {
+    padding: 12px;
+    border: 2px solid var(--blue-light);
+    border-radius: 8px;
+}
+
+input:focus {
+    border-color: var(--orange-light);
+    outline: none;
+}
+
+/* ---------------------------
+    TITULOS
+---------------------------- */
+h1, h2, h3 {
+    color: var(--blue-dark);
+}
+
+h1 span, h2 span {
+    color: var(--orange-dark);
+}
+
+/* ---------------------------
+    IMAGENES
+---------------------------- */
+.img-center {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    border-radius: 12px;
+}
