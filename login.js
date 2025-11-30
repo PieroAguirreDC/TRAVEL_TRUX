@@ -1,33 +1,30 @@
-/* ===========================================
-   LOGIN.JS - Lógica exclusiva del inicio de sesión
-=========================================== */
+document.getElementById("login-form").addEventListener("submit", function(e){
+    e.preventDefault();
 
-// Obtener usuarios guardados
-let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    const correo = document.getElementById("email").value.trim();
+    const pass = document.getElementById("password").value;
 
-// Manejar formulario
-const loginForm = document.getElementById("login-form");
+    const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+    const usuario = usuarios.find(u => u.correo === correo && u.password === pass);
 
-if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
-        e.preventDefault();
+    const msg = document.getElementById("login-msg");
 
-        let correo = document.getElementById("login-correo").value.trim().toLowerCase();
-        let password = document.getElementById("login-password").value;
+    if (!usuario) {
+        msg.textContent = "❌ Credenciales incorrectas.";
+        msg.style.color = "red";
+        return;
+    }
 
-        let usuario = usuarios.find(u => u.correo === correo && u.password === password);
+    if (usuario.estado !== "activo") {
+        msg.textContent = "⚠ Su cuenta aún no está verificada. Revise su correo.";
+        msg.style.color = "orange";
+        return;
+    }
 
-        if (!usuario) {
-            alert("Correo o contraseña incorrectos.");
-            return;
-        }
+    msg.textContent = "✔ Inicio de sesión exitoso.";
+    msg.style.color = "green";
 
-        // Guardar usuario logueado
-        localStorage.setItem("usuarioActual", JSON.stringify(usuario));
-
-        alert("Bienvenido " + usuario.nombre);
-
-        // Redirigir al home correcto (fuera de /pages)
-        window.location.href = "../index.html";
-    });
-}
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 1500);
+});
