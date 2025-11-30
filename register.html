@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse - TravelTrux</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <button class="nav-btn" onclick="window.location.href='index.html'">Inicio</button>
+            <button class="nav-btn" onclick="window.location.href='login.html'">Iniciar Sesión</button>
+            <button class="nav-btn active">Registrarse</button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="card" style="max-width:480px;">
+            <h2 style="text-align:center;">Crear <span>Cuenta</span></h2>
+
+            <form id="register-form">
+                <input type="text" id="nombre" placeholder="Nombre" required>
+                <input type="text" id="apellido" placeholder="Apellido" required>
+                <input type="text" id="telefono" placeholder="Teléfono" required>
+                <input type="text" id="documento" placeholder="DNI o Pasaporte" required>
+
+                <input type="email" id="email" placeholder="Correo electrónico" required>
+
+                <input type="password" id="password" placeholder="Contraseña (8 caracteres, mayúscula, minúscula, número, símbolo)" required>
+                <input type="password" id="password2" placeholder="Confirmar contraseña" required>
+
+                <button type="submit" class="btn btn-primary">Registrarse</button>
+            </form>
+
+            <p id="register-msg" style="text-align:center; margin-top:15px;"></p>
+
+            <p style="text-align:center; margin-top:15px;">
+                ¿Ya tienes una cuenta? 
+                <a href="login.html" style="color:var(--blue-medium); font-weight:bold;">Inicia sesión aquí</a>
+            </p>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="register.js"></script>
+</body>
+</html>
