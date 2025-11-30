@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - TravelTrux</title>
-
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
     <header>
         <nav>
             <button onclick="window.location.href='index.html'" class="nav-btn">Inicio</button>
@@ -18,26 +17,48 @@
     </header>
 
     <main>
-
-        <div class="card" style="max-width:520px; margin:40px auto;">
+        <div class="card login-card">
             <h2>Iniciar Sesión</h2>
 
             <form id="login-form">
                 <input type="email" id="login-correo" placeholder="Correo electrónico" required>
                 <input type="password" id="login-password" placeholder="Contraseña" required>
+                
+                <!-- Enlace para recuperar contraseña -->
+                <div class="forgot-password-container">
+                    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                </div>
 
-                <button class="btn btn-blue" type="submit" style="margin-top:10px;">
+                <button class="btn btn-blue" type="submit">
                     Ingresar
                 </button>
 
-                <p style="margin-top:12px; color:#666; font-size:14px;">
+                <!-- Mensaje de estado del login -->
+                <div id="login-msg"></div>
+
+                <p class="register-link">
                     ¿No tienes cuenta?
                     <a href="register.html">Registrarse</a>
                 </p>
             </form>
         </div>
-
     </main>
+
+    <!-- Modal para recuperar contraseña -->
+    <div id="recoveryModal" class="modal">
+        <div class="modal-content">
+            <h3>Recuperar contraseña</h3>
+            <p>Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
+            <input type="email" id="recovery-email" placeholder="Correo electrónico">
+            <div class="success-message" id="successMessage">
+                ¡Enlace de recuperación enviado! Revisa tu correo electrónico.
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" type="button">Cancelar</button>
+                <button class="btn-send" type="button">Enviar enlace</button>
+            </div>
+        </div>
+    </div>
 
     <script src="login.js"></script>
 </body>
