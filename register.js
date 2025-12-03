@@ -1,7 +1,41 @@
-// Inicializar EmailJS
+// ===============================
+//   EMAILJS - INICIALIZACIÓN
+// ===============================
 emailjs.init("DWR3umpRngp2s9V5-"); // public key
 
-document.getElementById("register-form").addEventListener("submit", function (e) {
+// ===============================
+//   VALIDAR DNI (API PERÚ)
+// ===============================
+async function validarDNI(dni) {
+    try {
+        const response = await fetch(`https://apiperu.dev/api/dni/${dni}`, {
+            headers: { 
+                "Authorization": "Bearer 5cfcd56dcb11cc3ebee5812dad1ef0a48f3da29708b0729fb3b7e3b6d586951a"
+            }
+        });
+
+        const data = await response.json();
+
+        if (data.success && data.data) {
+            return {
+                valido: true,
+                nombres: data.data.nombres,
+                apellidoPaterno: data.data.apellido_paterno,
+                apellidoMaterno: data.data.apellido_materno
+            };
+        }
+
+        return { valido: false };
+    } catch (err) {
+        console.error("Error API DNI:", err);
+        return { valido: false };
+    }
+}
+
+// ===============================
+//   EVENTO FORMULARIO REGISTRO
+// ===============================
+document.getElementById("register-form").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const nombre = document.getElementById("nombre").value.trim();
@@ -14,8 +48,23 @@ document.getElementById("register-form").addEventListener("submit", function (e)
     const msg = document.getElementById("register-msg");
 
     msg.style.color = "var(--orange-dark)";
+    msg.textContent = "Validando DNI...";
 
-    // Validación de contraseña segura
+    // ===============================
+    //   VALIDACIÓN DE DNI CON API
+    // ===============================
+    const dniInfo = await validarDNI(documento);
+
+    if (!dniInfo.valido) {
+        msg.textContent = "⚠ DNI inválido o no encontrado.";
+        return;
+    }
+
+    msg.textContent = "DNI válido. Validando datos...";
+
+    // ===============================
+    //   VALIDACIÓN DE CONTRASEÑA
+    // ===============================
     const regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
     if (!regexPass.test(pass1)) {
@@ -28,17 +77,23 @@ document.getElementById("register-form").addEventListener("submit", function (e)
         return;
     }
 
-    // Verificar si el usuario ya existe
+    // ===============================
+    //   VALIDAR SI YA EXISTE EL CORREO
+    // ===============================
     const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
     if (usuarios.find(u => u.correo === correo)) {
         msg.textContent = "⚠ Este correo ya está registrado.";
         return;
     }
 
-    // Token único para verificación
+    // ===============================
+    //   CREAR TOKEN PARA VERIFICAR
+    // ===============================
     const token = crypto.randomUUID();
 
-    // Crear usuario en LocalStorage
+    // ===============================
+    //   CREAR USUARIO EN LOCALSTORAGE
+    // ===============================
     const nuevoUsuario = {
         nombre,
         apellido,
@@ -47,20 +102,27 @@ document.getElementById("register-form").addEventListener("submit", function (e)
         correo,
         password: pass1,
         estado: "inactivo",
-        token
+        token,
+        // Datos devueltos por la API de DNI:
+        dni_validado: {
+            nombres: dniInfo.nombres,
+            apellido_paterno: dniInfo.apellidoPaterno,
+            apellido_materno: dniInfo.apellidoMaterno
+        }
     };
 
     usuarios.push(nuevoUsuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-    // Link de verificación
+    // ===============================
+    //   ENVIAR CORREO DE VERIFICACIÓN
+    // ===============================
     const linkVerificacion = `${window.location.origin}/verify.html?token=${token}`;
 
-    // Enviar correo
     const params = {
         nombreUsuario: nombre,
-        linkVerificacion: linkVerificacion,
-        correo: correo
+        linkVerificacion,
+        correo
     };
 
     emailjs.send("service_et9akmg", "template_c02kkcs", params)
