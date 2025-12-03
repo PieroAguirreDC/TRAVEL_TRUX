@@ -395,3 +395,38 @@ input:focus {
         width: 100%;
     }
 }
+/* --- ESTILOS DEL PANEL ADMIN --- */
+
+.admin-grid {
+    display: grid;
+    /* Esto define: Columna izquierda 1 parte, Columna derecha 2 partes */
+    grid-template-columns: 1fr 2fr; 
+    gap: 30px;
+    align-items: start; /* Para que se alineen arriba */
+}
+
+/* Estilo de la tabla */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    background-color: var(--blue-dark); /* Fondo azul oscuro */
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    color: var(--blue-dark);
+}
+
+/* Responsive para celular: Que se ponga uno debajo del otro */
+@media (max-width: 800px) {
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+}

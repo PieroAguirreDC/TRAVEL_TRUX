@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* ==============================
-       1. BASE DE DATOS DE PAQUETES
-       (Mejorada con más datos para que se vea bonita)
-    ============================== */
+    /* 1. DATOS CON IMÁGENES REALES (QUE SÍ FUNCIONAN) */
     const paquetes = [
         { 
             id: 1, 
@@ -13,9 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
             precioAntes: 1100.00,
             descuento: "-18%",
             cupos: 20, 
-            duracion: "4 Días / 3 Noches",
-            imagen: "https://i.ibb.co/FqtLpc8/cusco.jpg",
-            millas: "+1200 millas"
+            duracion: "4 Días",
+            // IMAGEN REAL DE UNSPLASH
+            imagen: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=600&q=80",
+            millas: "+1200"
         },
         { 
             id: 2, 
@@ -25,9 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
             precioAntes: 800.00,
             descuento: "-15%",
             cupos: 15, 
-            duracion: "3 Días / 2 Noches",
-            imagen: "https://i.ibb.co/qpRpVJ0/arequipa.jpg",
-            millas: "+600 millas"
+            duracion: "3 Días",
+            // IMAGEN REAL DE UNSPLASH
+            imagen: "https://images.unsplash.com/photo-1534234828569-1f353be91847?w=600&q=80",
+            millas: "+600"
         },
         { 
             id: 3, 
@@ -37,56 +36,35 @@ document.addEventListener('DOMContentLoaded', () => {
             precioAntes: 1500.00,
             descuento: "-20%",
             cupos: 10, 
-            duracion: "5 Días / 4 Noches",
-            imagen: "https://i.ibb.co/44hz13X/amazonas.jpg",
-            millas: "+1000 millas"
+            duracion: "5 Días",
+            // IMAGEN REAL DE UNSPLASH
+            imagen: "https://images.unsplash.com/photo-1554260570-e9689a3418b8?w=600&q=80",
+            millas: "+1000"
         }
     ];
 
-    let usuarioActual = JSON.parse(localStorage.getItem("usuarioActual")) || null;
-
-    /* ==============================
-       2. LÓGICA PARA EL HOME (index.html)
-       Busca el contenedor "destacados-grid"
-    ============================== */
+    /* 2. DIBUJAR TARJETAS EN EL INICIO */
     const contenedorDestacados = document.getElementById("destacados-grid");
     
     if (contenedorDestacados) {
-        // Limpiamos
         contenedorDestacados.innerHTML = "";
-        
-        // Mostramos todos (o podrías usar .slice(0, 3) para mostrar solo 3)
-        paquetes.forEach(p => {
-            crearTarjeta(p, contenedorDestacados);
-        });
+        paquetes.forEach(p => crearTarjeta(p, contenedorDestacados));
     }
 
-    /* ==============================
-       3. LÓGICA PARA PAQUETES (paquetes.html)
-       Busca el contenedor "packages-grid"
-    ============================== */
+    /* 3. DIBUJAR TARJETAS EN PAQUETES (Si aplica) */
     const contenedorPaquetes = document.getElementById("packages-grid");
-
     if (contenedorPaquetes) {
         contenedorPaquetes.innerHTML = "";
-        paquetes.forEach(p => {
-            crearTarjeta(p, contenedorPaquetes);
-        });
+        paquetes.forEach(p => crearTarjeta(p, contenedorPaquetes));
     }
 
-    /* ==============================
-       4. FUNCIÓN GENERADORA DE TARJETAS (DISEÑO NUEVO)
-       Esta función crea el HTML exacto para que el CSS funcione
-    ============================== */
+    /* 4. FUNCIÓN CREADORA */
     function crearTarjeta(viaje, contenedor) {
         const card = document.createElement("div");
-        card.className = "promo-card"; // Clase clave del CSS nuevo
+        card.className = "promo-card"; 
 
-        // Al hacer click, vamos al detalle (puedes cambiarlo a comprar directo si prefieres)
-        card.onclick = () => {
-            // Guardamos el ID del viaje seleccionado para saber cuál cargar en detalle.html
-            localStorage.setItem("viajeSeleccionado", viaje.id);
-            window.location.href = "detalle.html";
+        card.onclick = (e) => {
+            if(e.target.tagName !== 'BUTTON') irADetalle(viaje.id);
         };
 
         card.innerHTML = `
@@ -94,26 +72,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="discount-badge">Oferta ${viaje.descuento}</span>
                 <img src="${viaje.imagen}" alt="${viaje.nombre}">
             </div>
-            
             <div class="card-body">
                 <h4 class="card-title">${viaje.nombre}</h4>
                 <p class="card-subtitle">${viaje.subtitulo}</p>
-                
-                <div class="card-icons">
-                    <span>📅 ${viaje.duracion}</span>
-                    <span>✈️ ${viaje.millas}</span>
-                    <span>👥 ${viaje.cupos} cupos</span>
-                </div>
-
                 <div class="card-pricing">
                     <span class="price-old">S/ ${viaje.precioAntes.toFixed(2)}</span>
                     <span class="price-new">S/ ${viaje.precio.toFixed(2)}</span>
                 </div>
-                
-                <button class="btn-medida" style="margin-top:10px; width:100%;">Ver Detalles</button>
+                <button class="btn-card-action" onclick="irADetalle(${viaje.id})">Ver Detalles</button>
             </div>
         `;
-
         contenedor.appendChild(card);
     }
+
+    window.irADetalle = (id) => {
+        localStorage.setItem("viajeSeleccionado", id);
+        window.location.href = "detalle.html";
+    };
 });

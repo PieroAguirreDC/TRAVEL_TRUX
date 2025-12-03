@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Cliente - TravelTrux</title>
+    <title>Mis Puntos - TravelTrux</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -16,49 +16,45 @@
                 <span class="brand-name">TRAVELTRUX</span>
             </div>
             <div class="nav-links">
-                <a href="#">Inicio</a>
-                <a href="history.html">Mis Viajes</a> 
-                <button class="nav-btn" onclick="cerrarSesion()">Cerrar Sesión</button>
+                <a href="cliente.html">Mi Panel</a>
+                <a href="history.html">Mis Viajes</a>
+                <a href="#" class="active">🎁 Mis Puntos</a> <button class="nav-btn" onclick="cerrarSesion()">Cerrar Sesión</button>
             </div>
         </nav>
     </header>
 
     <main class="packages-container">
-        <div class="section-header">
-            <h1>¡Hola, Viajero! 👋</h1>
-            <p>Aquí tienes las mejores ofertas exclusivas para ti.</p>
-        </div>
-
-        <section class="loyalty-section">
+        
+        <section class="loyalty-section" style="margin-bottom: 50px;">
             <div class="loyalty-card">
                 <div class="loyalty-info">
-                    <h3>💎 Mis TravelPuntos</h3>
-                    <p>Acumula puntos por cada viaje y canjéalos por descuentos.</p>
+                    <h3>💎 TravelClub Rewards</h3>
+                    <p>Tus puntos acumulados listos para usar.</p>
                     <div class="points-display">
-                        <span id="puntos-actuales">2,450</span>
+                        <span id="puntos-actuales">0</span>
                         <span class="points-label">pts</span>
                     </div>
                 </div>
-                <div class="loyalty-actions">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 70%;"></div>
-                    </div>
-                    <p class="next-reward">Faltan 550 pts para tu próximo descuento</p>
-                    <button class="btn-redeem">🎁 Canjear Puntos</button>
+                <div class="loyalty-actions" style="text-align: center;">
+                    <p style="font-size: 1.2rem;">Nivel: <strong>Viajero Oro</strong> 🌟</p>
+                    <p style="opacity: 0.8;">Vencen: 31 Dic 2025</p>
                 </div>
             </div>
         </section>
 
-        <div style="margin-top: 40px;"></div>
+        <div class="section-header">
+            <h2 style="color: var(--blue-dark);">🎁 Catálogo de Recompensas</h2>
+            <p>Canjea tus puntos por descuentos y experiencias exclusivas.</p>
+        </div>
 
-        <div id="packages-grid" class="packages-grid">
+        <div id="premios-grid" class="packages-grid">
             </div>
+
     </main>
 
-    <script src="cliente.js"></script>
+    <script src="puntos.js"></script>
     
     <script>
-        // Función simple para salir
         function cerrarSesion() {
             localStorage.removeItem('usuarioActual');
             window.location.href = 'index.html';

@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Reembolsos</title>
+    <title>Administración - TravelTrux</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <header style="background-color: #1a252f;">
         <nav class="navbar">
             <div class="logo-container">
@@ -22,33 +23,43 @@
     </header>
 
     <main class="packages-container">
+        
         <div class="section-header">
-            <h1>Gestión de Reembolsos</h1>
-            <p>Control contable de devoluciones (TRAV-3)</p>
+            <h1 style="color: #0F375A; font-weight: 800;">Gestión de Reembolsos</h1>
+            <p style="color: #555;">Control contable de devoluciones (TRAV-3)</p>
         </div>
 
         <div class="admin-grid">
-            <section class="card">
-                <h3 style="color: var(--blue-dark); margin-bottom: 15px;">📝 Registrar Nuevo</h3>
+            
+            <section class="card admin-form-card">
+                <h3 style="margin-bottom: 15px; color: #0F375A;">📝 Registrar Nuevo</h3>
+                
                 <form id="form-reembolso">
-                    <div style="margin-bottom: 10px;">
-                        <label>Cliente:</label>
-                        <input type="text" id="cliente" placeholder="Nombre completo" required>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display:block; font-weight:600; margin-bottom:5px; color:#0F375A;">Cliente:</label>
+                        <input type="text" id="cliente" placeholder="Nombre completo" required 
+                               style="width: 100%; padding: 10px; border: 2px solid #1F82C0; border-radius: 6px;">
                     </div>
-                    <div style="margin-bottom: 10px;">
-                        <label>Monto (S/):</label>
-                        <input type="number" id="monto" placeholder="0.00" required>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display:block; font-weight:600; margin-bottom:5px; color:#0F375A;">Monto (S/):</label>
+                        <input type="number" id="monto" placeholder="0.00" step="0.01" required
+                               style="width: 100%; padding: 10px; border: 2px solid #1F82C0; border-radius: 6px;">
                     </div>
-                    <div style="margin-bottom: 10px;">
-                        <label>Motivo:</label>
-                        <input type="text" id="motivo" placeholder="Causa de devolución" required>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display:block; font-weight:600; margin-bottom:5px; color:#0F375A;">Motivo:</label>
+                        <input type="text" id="motivo" placeholder="Causa de devolución" required
+                               style="width: 100%; padding: 10px; border: 2px solid #1F82C0; border-radius: 6px;">
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">Guardar</button>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; font-weight:bold;">Guardar</button>
                 </form>
             </section>
 
-            <section class="card">
-                <h3 style="color: var(--blue-dark); margin-bottom: 15px;">📋 Historial</h3>
+            <section class="card admin-table-card">
+                <h3 style="margin-bottom: 15px; color: #0F375A;">📋 Historial</h3>
+                
                 <table class="admin-table">
                     <thead>
                         <tr>
@@ -58,23 +69,20 @@
                             <th>Acción</th>
                         </tr>
                     </thead>
-                    <tbody id="tabla-body"></tbody>
+                    <tbody id="tabla-body">
+                        </tbody>
                 </table>
             </section>
+
         </div>
     </main>
 
-    <style>
-        .admin-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
-        .admin-table { width: 100%; border-collapse: collapse; }
-        .admin-table th, .admin-table td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
-        .admin-table th { background: var(--blue-dark); color: white; }
-        @media(max-width: 768px) { .admin-grid { grid-template-columns: 1fr; } }
-    </style>
-
     <script src="admin.js"></script>
     <script>
-        function cerrarSesion() { localStorage.removeItem('usuarioActual'); window.location.href='index.html'; }
+        function cerrarSesion() {
+            localStorage.removeItem('usuarioActual');
+            window.location.href = 'index.html';
+        }
     </script>
 </body>
 </html>

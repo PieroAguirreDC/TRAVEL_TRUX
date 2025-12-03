@@ -1,6 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // =================================================
+    // 1. SEGURIDAD: VERIFICAR QUE SEA CLIENTE
+    // =================================================
+    const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
+    
+    if (!usuario || usuario.rol !== 'cliente') {
+        window.location.href = 'login.html'; // Si intenta entrar un admin o nadie, fuera.
+        return;
+    }
 
-    // 1. LA MISMA BASE DE DATOS QUE EN EL INICIO
+    // =================================================
+    // 2. LÓGICA DE PUNTOS (FIDELIZACIÓN)
+    // =================================================
+    // Si ya tiene puntos guardados, los usa. Si no, le regalamos 2450.
+    let misPuntos = localStorage.getItem('misTravelPuntos');
+    
+    if (!misPuntos) {
+        misPuntos = 2450; 
+        localStorage.setItem('misTravelPuntos', misPuntos);
+    }
+
+    // Actualizar el número en la tarjeta dorada
+    const displayPuntos = document.getElementById('puntos-actuales');
+    if(displayPuntos) {
+        displayPuntos.textContent = misPuntos;
+    }
+
+    // Hacer que el botón "Canjear" funcione
+    const btnCanjear = document.querySelector('.btn-redeem');
+    if(btnCanjear) {
+        btnCanjear.onclick = () => {
+            alert(`🎉 ¡Genial ${usuario.nombre}!\n\nTienes ${misPuntos} puntos disponibles.\nPronto habilitaremos el catálogo de premios.`);
+        };
+    }
+
+    // =================================================
+    // 3. BASE DE DATOS DE PAQUETES (FOTOS REALES)
+    // =================================================
     const paquetes = [
         { 
             id: 1, 
@@ -10,9 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
             precioAntes: 1100.00,
             descuento: "-18%",
             cupos: 20, 
-            duracion: "4 Días / 3 Noches",
-            imagen: "https://i.ibb.co/FqtLpc8/cusco.jpg",
-            millas: "+1200 millas"
+            duracion: "4 Días",
+            imagen: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=600&q=80", 
+            millas: "+1200"
         },
         { 
             id: 2, 
@@ -22,9 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
             precioAntes: 800.00,
             descuento: "-15%",
             cupos: 15, 
-            duracion: "3 Días / 2 Noches",
-            imagen: "https://i.ibb.co/qpRpVJ0/arequipa.jpg",
-            millas: "+600 millas"
+            duracion: "3 Días",
+            imagen: "https://images.unsplash.com/photo-1534234828569-1f353be91847?w=600&q=80", 
+            millas: "+600"
         },
         { 
             id: 3, 
@@ -34,29 +71,29 @@ document.addEventListener('DOMContentLoaded', () => {
             precioAntes: 1500.00,
             descuento: "-20%",
             cupos: 10, 
-            duracion: "5 Días / 4 Noches",
-            imagen: "https://i.ibb.co/44hz13X/amazonas.jpg",
-            millas: "+1000 millas"
+            duracion: "5 Días",
+            imagen: "https://images.unsplash.com/photo-1554260570-e9689a3418b8?w=600&q=80", 
+            millas: "+1000"
         }
     ];
 
-    // 2. BUSCAR EL CONTENEDOR NUEVO
+    // =================================================
+    // 4. DIBUJAR LAS TARJETAS EN PANTALLA
+    // =================================================
     const contenedor = document.getElementById("packages-grid");
 
     if (contenedor) {
-        contenedor.innerHTML = ""; // Limpiar
+        contenedor.innerHTML = ""; // Limpiar antes de dibujar
         
-        // 3. GENERAR LAS TARJETAS (DISEÑO NUEVO)
         paquetes.forEach(viaje => {
             const card = document.createElement("div");
-            card.className = "promo-card"; // ¡Importante! Usa la clase del CSS nuevo
+            card.className = "promo-card"; // Usamos la clase del CSS nuevo
 
+            // Al hacer click en cualquier parte de la tarjeta
             card.onclick = (e) => {
-                // Si no es click en el botón, redirige igual
                 if(e.target.tagName !== 'BUTTON') irADetalle(viaje.id);
             };
 
-            // HTML IDÉNTICO AL DE LA PÁGINA DE INICIO
             card.innerHTML = `
                 <div class="card-image-header">
                     <span class="discount-badge">Oferta ${viaje.descuento}</span>
@@ -69,8 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     <div class="card-icons">
                         <span>📅 ${viaje.duracion}</span>
-                        <span>✈️ ${viaje.millas}</span>
-                        <span>👥 ${viaje.cupos} cupos</span>
+                        <span style="color: #F6A329; font-weight: bold;">💎 Gana ${viaje.millas.replace('+','')} pts</span>
                     </div>
 
                     <div class="card-pricing">
@@ -86,9 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Función global para redirigir
+    // =================================================
+    // 5. FUNCIÓN PARA IR AL DETALLE
+    // =================================================
     window.irADetalle = (id) => {
         localStorage.setItem("viajeSeleccionado", id);
         window.location.href = "detalle.html";
     };
-})
+});
