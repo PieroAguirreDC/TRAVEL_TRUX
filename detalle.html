@@ -8,45 +8,53 @@
 </head>
 <body>
     <header>
-        <nav>
-            <a href="index.html">Inicio</a>
-            <a href="login.html" class="nav-btn">Iniciar Sesión</a>
+        <nav class="navbar">
+            <div class="logo-container">
+                <img src="logo Travel.png" alt="TravelTrux" class="nav-logo">
+                <span class="brand-name">TRAVELTRUX</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Inicio</a>
+                <a href="login.html" class="nav-btn">Iniciar Sesión</a>
+            </div>
         </nav>
     </header>
 
     <main class="details-container">
-        <section class="trip-gallery">
-            <img id="main-image" src="" alt="Destino principal" class="main-img">
-        </section>
+        <div class="main-grid">
+            
+            <section class="trip-viewer">
+                <div class="gallery-frame">
+                    <img id="main-image" src="" alt="Destino" class="main-img">
+                    <div class="trip-overlay-info">
+                        <h1 id="trip-title">Cargando...</h1>
+                        <span id="trip-price" class="price-badge">S/ 0.00</span>
+                    </div>
+                </div>
 
-        <div class="trip-content-layout">
-            <section class="trip-info-main">
-                <h1 id="trip-title">Cargando título...</h1>
-                <p id="trip-desc" class="trip-description">...</p>
-                
-                <div class="itinerary-section">
-                    <h2>Itinerario de Viaje</h2>
+                <div class="trip-details-body">
+                    <div class="quick-stats">
+                        <span>⏱️ <strong id="trip-duration">-- días</strong></span>
+                        <span>👥 <strong id="trip-capacity">-- cupos</strong></span>
+                        <span>⭐ <strong>4.8/5</strong></span>
+                    </div>
+                    
+                    <p id="trip-desc" class="description-text">...</p>
+
+                    <h3>Itinerario de Viaje</h3>
                     <ul id="itinerary-list" class="itinerary-list">
                         </ul>
+
+                    <button class="btn btn-primary btn-reservar">¡Reservar este paquete ahora!</button>
                 </div>
             </section>
 
-            <aside class="booking-card">
-                <div class="price-tag">
-                    <span class="label">Precio por persona</span>
-                    <span id="trip-price" class="amount">S/ 0.00</span>
-                </div>
-                
-                <div class="capacity-info">
-                    <strong>Cupos disponibles:</strong> <span id="trip-capacity">0</span>
-                </div>
-
-                <div class="video-preview">
-                    <p>🎥 Ver video del destino</p>
-                </div>
-
-                <button class="btn btn-primary btn-block">¡Reservar Ahora!</button>
+            <aside class="sidebar-suggestions">
+                <h3>✈️ Más Destinos Populares</h3>
+                <div id="packages-list" class="cards-scroller">
+                    </div>
             </aside>
+
         </div>
     </main>
 
