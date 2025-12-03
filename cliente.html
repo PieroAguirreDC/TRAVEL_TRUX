@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Cliente - TravelTrux</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo-container">
+                <img src="logo Travel.png" alt="TravelTrux" class="nav-logo">
+                <span class="brand-name">TRAVELTRUX</span>
+            </div>
+            <div class="nav-links">
+                <a href="#">Inicio</a>
+                <a href="history.html">Mis Viajes</a> <button class="nav-btn" onclick="cerrarSesion()">Cerrar Sesión</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="packages-container">
+        <div class="section-header">
+            <h1>¡Hola, Viajero! 👋</h1>
+            <p>Aquí tienes las mejores ofertas exclusivas para ti.</p>
+        </div>
+
+        <div id="packages-grid" class="packages-grid">
+            </div>
+    </main>
+
+    <script src="cliente.js"></script>
+    
+    <script>
+        // Función simple para salir
+        function cerrarSesion() {
+            localStorage.removeItem('usuarioActual');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

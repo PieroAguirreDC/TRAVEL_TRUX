@@ -1,121 +1,146 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. DATA DE VIAJES (Trujillo y Lima en Soles)
-    const paquetes = [
+
+    /* 1. BASE DE DATOS DE VIAJES
+       (Debe ser idéntica a la de paquetes.js para que coincida la info) */
+    const baseDatosViajes = [
         {
-            id: 1,
-            titulo: "TESOROS DE TRUJILLO",
-            subtitulo: "Chan Chan, Huanchaco y Huacas",
-            descripcion: "Descubre la capital de la eterna primavera. Incluye visita a la ciudadela de barro más grande del mundo y show de caballos de paso.",
-            precio: 450.00,
-            precioAntes: 600.00, // Precio para tachar
-            descuento: "-25%",
-            duracion: "3 Días / 2 Noches",
-            imagen: "https://www.peru.travel/Contenido/Atractivo/Imagen/en/105/1.1/Principal/Huanchaco.jpg",
+            id: 1, 
+            titulo: "CUSCO IMPERIAL",
+            subtitulo: "Machu Picchu y Valle Sagrado",
+            precio: 1450.00,
+            precioAntes: 1800.00,
+            cupos: 20,
+            imagen: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1000&auto=format&fit=crop",
             itinerario: [
-                "Día 1: Recepción y City Tour Trujillo.",
-                "Día 2: Full Day Chan Chan y Huanchaco.",
-                "Día 3: Compras de zapatos y traslado."
+                "Día 1: Recepción en aeropuerto, traslado al hotel y mate de coca.",
+                "Día 2: Tour completo al Valle Sagrado de los Incas.",
+                "Día 3: Viaje en tren y visita guiada a la ciudadela de Machu Picchu.",
+                "Día 4: Mañana libre para compras y traslado al aeropuerto."
             ]
         },
         {
             id: 2,
-            titulo: "LIMA GASTRONÓMICA",
-            subtitulo: "Miraflores, Barranco y Centro",
-            descripcion: "Un recorrido por los mejores sabores de la capital. Visita mercados locales, clases de cocina y cena en restaurante top.",
-            precio: 380.00,
-            precioAntes: 550.00,
-            descuento: "-30%",
-            duracion: "3 Días / 2 Noches",
-            imagen: "https://media.traveler.es/photos/61376a6b568343e2e5052341/master/w_1600%2Cc_limit/196620.jpg",
+            titulo: "VERANO EN MÁNCORA",
+            subtitulo: "Sol, playa y arena en el norte",
+            precio: 890.00,
+            precioAntes: 1100.00,
+            cupos: 15,
+            imagen: "https://images.unsplash.com/photo-1534234828569-1f353be91847?q=80&w=1000&auto=format&fit=crop",
             itinerario: [
-                "Día 1: Circuito Mágico del Agua.",
-                "Día 2: Tour Gastronómico y Barranco.",
-                "Día 3: Mañana libre en Larcomar."
+                "Día 1: Bienvenida con coctel y tarde libre en la playa.",
+                "Día 2: Tour de avistamiento de ballenas y nado con tortugas.",
+                "Día 3: Desayuno buffet y check-out al mediodía."
             ]
         },
         {
             id: 3,
-            titulo: "RUTA MOCHE Y CAPITAL",
-            subtitulo: "Lima y Trujillo al completo",
-            descripcion: "La combinación perfecta entre historia y modernidad. Conecta la capital con el norte en un viaje inolvidable.",
-            precio: 850.00,
-            precioAntes: 1200.00,
-            descuento: "-15%",
-            duracion: "5 Días / 4 Noches",
-            imagen: "https://blog.redbus.pe/wp-content/uploads/2018/03/Plaza-de-Armas-Trujillo.jpg",
+            titulo: "AMAZONAS SALVAJE",
+            subtitulo: "Iquitos, Río Amazonas y Naturaleza",
+            precio: 1200.00,
+            precioAntes: 1500.00,
+            cupos: 10,
+            imagen: "https://www.peru.travel/Contenido/Atractivo/Imagen/en/184/1.1/Principal/Rio%20Amazonas.jpg",
             itinerario: [
-                "Día 1: Llegada a Lima y tour nocturno.",
-                "Día 2: Vuelo a Trujillo y playa.",
-                "Día 3: Ruta del Sol y la Luna.",
-                "Día 4: Complejo El Brujo.",
-                "Día 5: Retorno."
+                "Día 1: Navegación por el río Amazonas hasta el Lodge.",
+                "Día 2: Caminata por la selva y observación de delfines rosados.",
+                "Día 3: Visita a comunidad nativa Yagua.",
+                "Día 4: Pesca de pirañas y caminata nocturna.",
+                "Día 5: Retorno a la ciudad de Iquitos."
+            ]
+        },
+        {
+            id: 4,
+            titulo: "TESOROS DE TRUJILLO",
+            subtitulo: "Chan Chan y Balneario de Huanchaco",
+            precio: 450.00,
+            precioAntes: 600.00,
+            cupos: 8,
+            imagen: "https://www.peru.travel/Contenido/Atractivo/Imagen/en/105/1.1/Principal/Huanchaco.jpg",
+            itinerario: [
+                "Día 1: City Tour por el centro histórico de Trujillo.",
+                "Día 2: Visita a la ciudadela de Chan Chan y playa Huanchaco.",
+                "Día 3: Tour a las Huacas del Sol y la Luna."
+            ]
+        },
+        {
+            id: 5,
+            titulo: "LIMA GASTRONÓMICA",
+            subtitulo: "Capital del sabor y la historia",
+            precio: 380.00,
+            precioAntes: 550.00,
+            cupos: 12,
+            imagen: "https://media.traveler.es/photos/61376a6b568343e2e5052341/master/w_1600%2Cc_limit/196620.jpg",
+            itinerario: [
+                "Día 1: Circuito Mágico del Agua y cena show.",
+                "Día 2: Tour gastronómico por mercados y clases de cocina.",
+                "Día 3: Paseo por Barranco y Miraflores."
+            ]
+        },
+        {
+            id: 6,
+            titulo: "TRIO DE LOS BALCANES",
+            subtitulo: "Europa clásica: Zagreb, Sarajevo y Dubrovnik",
+            precio: 1602.76,
+            precioAntes: 1763.00,
+            cupos: 5,
+            imagen: "https://www.viajeselcorteingles.es/imagenes/v3/ofertas/cruceros/crucero-fluvial/rio-danubio/1.jpg",
+            itinerario: [
+                "Día 1-3: Zagreb - Recorrido por la ciudad alta y baja.",
+                "Día 4-6: Sarajevo - Historia y cultura en el corazón de los Balcanes.",
+                "Día 7-9: Dubrovnik - La perla del Adriático y sus murallas.",
+                "Día 10: Traslado al aeropuerto internacional."
             ]
         }
     ];
 
-    // 2. REFERENCIAS AL DOM
-    const contenedorLista = document.getElementById('packages-list');
+    /* 2. RECUPERAR EL ID SELECCIONADO */
+    const viajeId = localStorage.getItem("viajeSeleccionado");
 
-    // 3. FUNCIÓN: Cargar viaje en el visor principal
-    window.cargarViaje = (indice) => {
-        const viaje = paquetes[indice];
+    /* 3. LÓGICA DE CARGA */
+    if (viajeId) {
+        // Buscamos el viaje en el array (convertimos el ID a número por si acaso)
+        const viaje = baseDatosViajes.find(v => v.id === parseInt(viajeId));
+
+        if (viaje) {
+            mostrarDetalles(viaje);
+        } else {
+            alert("Viaje no encontrado.");
+            window.location.href = "paquetes.html";
+        }
+    } else {
+        // Si no hay ID, volvemos a la lista
+        window.location.href = "paquetes.html";
+    }
+
+    /* 4. FUNCIÓN PARA DIBUJAR EN PANTALLA */
+    function mostrarDetalles(viaje) {
+        // Textos básicos
+        document.getElementById('detail-title').textContent = viaje.titulo;
+        document.getElementById('detail-subtitle').textContent = viaje.subtitulo;
+        document.getElementById('detail-price').textContent = `S/ ${viaje.precio.toFixed(2)}`;
+        document.getElementById('detail-old-price').textContent = `S/ ${viaje.precioAntes.toFixed(2)}`;
+        document.getElementById('detail-cupos').textContent = viaje.cupos;
         
-        const imgMain = document.getElementById('main-image');
-        imgMain.style.opacity = '0';
-        
-        setTimeout(() => {
-            imgMain.src = viaje.imagen;
-            imgMain.style.opacity = '1';
-            
-            document.getElementById('trip-title').textContent = viaje.titulo;
-            document.getElementById('trip-price').textContent = `S/ ${viaje.precio.toFixed(2)}`;
-            document.getElementById('trip-desc').textContent = viaje.descripcion;
-            document.getElementById('trip-duration').textContent = `📅 ${viaje.duracion}`;
-            document.getElementById('trip-capacity').textContent = `👥 Cupos limitados`;
-            
-            const listaItin = document.getElementById('itinerary-list');
-            listaItin.innerHTML = '';
-            viaje.itinerario.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = "📍 " + item;
-                listaItin.appendChild(li);
-            });
-        }, 200);
-    };
+        // Imagen
+        document.getElementById('detail-image').src = viaje.imagen;
 
-    // 4. GENERAR LAS TARJETAS ESTILO "AGENCIA"
-    contenedorLista.innerHTML = ''; // Limpiar antes de llenar
-    paquetes.forEach((viaje, index) => {
-        const tarjeta = document.createElement('div');
-        tarjeta.classList.add('promo-card'); // Nueva clase para el estilo nuevo
-        tarjeta.onclick = () => cargarViaje(index);
+        // Itinerario (Bucle para crear la lista)
+        const listaItinerario = document.getElementById('detail-itinerary');
+        listaItinerario.innerHTML = ''; // Limpiar
 
-        tarjeta.innerHTML = `
-            <div class="card-image-header">
-                <span class="discount-badge">Ahorras ${viaje.descuento}</span>
-                <img src="${viaje.imagen}" alt="${viaje.titulo}">
-                <button class="btn-medida">✏️ ¡Hazlo a tu medida!</button>
-            </div>
-            
-            <div class="card-body">
-                <h4 class="card-title">${viaje.titulo}</h4>
-                <p class="card-subtitle">${viaje.subtitulo}</p>
-                
-                <div class="card-icons">
-                    <span>📅 ${viaje.duracion}</span>
-                    <span>🚫 Cancelación gratuita</span>
-                </div>
+        viaje.itinerario.forEach(actividad => {
+            const item = document.createElement('li');
+            item.style.marginBottom = "10px";
+            item.style.padding = "10px";
+            item.style.background = "#f8f9fa";
+            item.style.borderRadius = "8px";
+            item.style.borderLeft = "4px solid #F6A329"; // Decoración naranja
+            item.textContent = actividad;
+            listaItinerario.appendChild(item);
+        });
 
-                <div class="card-pricing">
-                    <span class="price-old">Desde S/ ${viaje.precioAntes}</span>
-                    <span class="price-new">S/ ${viaje.precio.toFixed(2)}</span>
-                </div>
-            </div>
-        `;
-        contenedorLista.appendChild(tarjeta);
-    });
-
-    // Cargar el primero por defecto
-    cargarViaje(0);
+        // Mostrar el contenido y ocultar mensaje de carga
+        document.getElementById('loading-msg').style.display = 'none';
+        document.getElementById('detail-content').style.display = 'block';
+    }
 });

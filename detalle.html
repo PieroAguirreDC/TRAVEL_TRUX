@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle del Viaje - Travel Trux</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <header>
         <nav class="navbar">
             <div class="logo-container">
@@ -15,46 +17,62 @@
             </div>
             <div class="nav-links">
                 <a href="index.html">Inicio</a>
+                <a href="paquetes.html">Paquetes</a>
                 <a href="login.html" class="nav-btn">Iniciar Sesión</a>
             </div>
         </nav>
     </header>
 
-    <main class="details-container">
-        <div class="main-grid">
+    <main class="packages-container">
+        
+        <div id="loading-msg" style="text-align: center; margin-top: 50px;">Cargando información...</div>
+
+        <div id="detail-content" style="display: none;">
             
-            <section class="trip-viewer">
-                <div class="gallery-frame">
-                    <img id="main-image" src="" alt="Destino" class="main-img">
-                    <div class="trip-overlay-info">
-                        <h1 id="trip-title">Cargando...</h1>
-                        <span id="trip-price" class="price-badge">S/ 0.00</span>
-                    </div>
-                </div>
+            <div class="gallery-frame" style="margin-bottom: 30px; position: relative;">
+                <img id="detail-image" src="" alt="Destino" style="width: 100%; height: 400px; object-fit: cover; border-radius: 12px;">
+                
+                <button style="position: absolute; bottom: 20px; right: 20px; background: white; border: none; padding: 10px 20px; border-radius: 30px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                    🎥 Ver Video del Destino
+                </button>
+            </div>
 
-                <div class="trip-details-body">
-                    <div class="quick-stats">
-                        <span>⏱️ <strong id="trip-duration">-- días</strong></span>
-                        <span>👥 <strong id="trip-capacity">-- cupos</strong></span>
-                        <span>⭐ <strong>4.8/5</strong></span>
-                    </div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px;">
+                
+                <section>
+                    <h1 id="detail-title" style="font-size: 2.5rem; color: var(--blue-dark); margin-bottom: 10px;">Título</h1>
+                    <p id="detail-subtitle" style="font-size: 1.2rem; color: var(--gray-dark); margin-bottom: 20px;">Subtítulo</p>
                     
-                    <p id="trip-desc" class="description-text">...</p>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid var(--gray-light);">
+                        <h3 style="color: var(--blue-medium); margin-bottom: 15px;">📝 Itinerario Detallado</h3>
+                        <ul id="detail-itinerary" style="list-style: none; padding: 0;">
+                            </ul>
+                    </div>
+                </section>
 
-                    <h3>Itinerario de Viaje</h3>
-                    <ul id="itinerary-list" class="itinerary-list">
+                <aside>
+                    <div class="card" style="margin: 0; position: sticky; top: 100px;">
+                        <span style="font-size: 0.9rem; color: var(--gray-dark);">Precio por persona</span>
+                        <div style="margin-bottom: 15px;">
+                            <span id="detail-old-price" style="text-decoration: line-through; color: var(--gray-medium); margin-right: 10px;"></span>
+                            <span id="detail-price" style="font-size: 2.5rem; font-weight: 800; color: var(--error-dark);"></span>
+                        </div>
+
+                        <div style="background: var(--warning-light); color: var(--orange-dark); padding: 10px; border-radius: 6px; text-align: center; margin-bottom: 20px; font-weight: bold;">
+                            🔥 ¡Solo quedan <span id="detail-cupos">0</span> cupos!
+                        </div>
+
+                        <ul style="margin-bottom: 20px; font-size: 0.9rem; color: var(--blue-dark);">
+                            <li style="margin-bottom: 8px;">✅ Incluye Alojamiento</li>
+                            <li style="margin-bottom: 8px;">✅ Guía Turístico</li>
+                            <li style="margin-bottom: 8px;">✅ Desayunos</li>
+                            <li style="margin-bottom: 8px;">🚫 No incluye vuelos internacionales</li>
                         </ul>
 
-                    <button class="btn btn-primary btn-reservar">¡Reservar este paquete ahora!</button>
-                </div>
-            </section>
-
-            <aside class="sidebar-suggestions">
-                <h3>✈️ Más Destinos Populares</h3>
-                <div id="packages-list" class="cards-scroller">
+                        <button class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">¡Reservar Ahora!</button>
                     </div>
-            </aside>
-
+                </aside>
+            </div>
         </div>
     </main>
 
