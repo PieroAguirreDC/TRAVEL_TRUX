@@ -1,3 +1,4 @@
+
 /* ---------------------------
    PALETA DE COLORES TRAVELTRUX
 ---------------------------- */
@@ -9,6 +10,15 @@
     --blue-light: #1F82C0;
     --bg-light: #F8F8F8;
     --white: #FFFFFF;
+    --gray-light: #E0E0E0;
+    --gray-medium: #95a5a6;
+    --gray-dark: #7f8c8d;
+    --success-light: #d4edda;
+    --success-dark: #155724;
+    --warning-light: #fff3e6;
+    --warning-dark: #orange;
+    --error-light: #ffe6e6;
+    --error-dark: #red;
 }
 
 /* ---------------------------
@@ -24,6 +34,7 @@
 body {
     background: var(--bg-light);
     color: var(--blue-dark);
+    line-height: 1.6;
 }
 
 /* ---------------------------
@@ -93,6 +104,11 @@ header nav {
     max-width: 900px;
 }
 
+.login-card {
+    max-width: 520px !important;
+    margin: 40px auto;
+}
+
 /* ---------------------------
    BOTONES
 ---------------------------- */
@@ -103,6 +119,7 @@ header nav {
     cursor: pointer;
     border: none;
     transition: 0.3s ease;
+    font-weight: 500;
 }
 
 /* Botón naranja principal */
@@ -139,6 +156,8 @@ input {
     padding: 12px;
     border: 2px solid var(--blue-light);
     border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
 }
 
 input:focus {
@@ -147,7 +166,7 @@ input:focus {
 }
 
 /* ---------------------------
-    TITULOS
+   TITULOS
 ---------------------------- */
 h1, h2, h3 {
     color: var(--blue-dark);
@@ -158,11 +177,193 @@ h1 span, h2 span {
 }
 
 /* ---------------------------
-    IMAGENES
+   IMAGENES
 ---------------------------- */
 .img-center {
     display: block;
     margin: auto;
     max-width: 100%;
     border-radius: 12px;
+}
+
+/* ---------------------------
+   ESTILOS ESPECÍFICOS PARA LOGIN
+---------------------------- */
+.forgot-password-container {
+    text-align: right;
+    margin: 10px 0;
+}
+
+.forgot-password {
+    color: var(--blue-medium);
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: var(--blue-light);
+    text-decoration: underline;
+}
+
+.register-link {
+    margin-top: 12px;
+    color: var(--gray-medium);
+    font-size: 14px;
+    text-align: center;
+}
+
+.register-link a {
+    color: var(--blue-medium);
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+#login-msg {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ---------------------------
+   MODAL DE RECUPERACIÓN
+---------------------------- */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 55, 90, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 30px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.modal h3 {
+    margin-bottom: 15px;
+    color: var(--blue-dark);
+    text-align: center;
+    font-size: 24px;
+}
+
+.modal p {
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--gray-medium);
+    line-height: 1.5;
+}
+
+.modal input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 2px solid var(--blue-light);
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.modal input:focus {
+    border-color: var(--orange-light);
+}
+
+.success-message {
+    background-color: var(--success-light);
+    color: var(--success-dark);
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+    display: none;
+    text-align: center;
+    font-weight: 500;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-cancel {
+    background-color: var(--gray-medium);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-send {
+    background-color: var(--blue-medium);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-cancel:hover {
+    background-color: var(--gray-dark);
+}
+
+.btn-send:hover {
+    background-color: var(--blue-light);
+}
+
+/* ---------------------------
+   RESPONSIVE
+---------------------------- */
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 20px;
+        margin: 20px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .btn-cancel, .btn-send {
+        width: 100%;
+    }
+    
+    .login-card {
+        margin: 20px;
+        padding: 20px;
+    }
 }
