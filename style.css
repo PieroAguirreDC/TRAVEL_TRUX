@@ -1,7 +1,7 @@
 
-/* ---------------------------
-   PALETA DE COLORES TRAVELTRUX
----------------------------- */
+/* =========================================
+   1. VARIABLES Y CONFIGURACIÓN BASE
+========================================= */
 :root {
     --orange-light: #F6A329;
     --orange-dark: #E46A1F;
@@ -15,15 +15,11 @@
     --gray-dark: #7f8c8d;
     --success-light: #d4edda;
     --success-dark: #155724;
-    --warning-light: #fff3e6;
-    --warning-dark: #orange;
     --error-light: #ffe6e6;
-    --error-dark: #red;
+    --error-dark: #d32f2f; /* Rojo intenso para ofertas/errores */
+    --warning-light: #fff3e6;
 }
 
-/* ---------------------------
-   ESTILOS GENERALES
----------------------------- */
 * {
     margin: 0;
     padding: 0;
@@ -32,69 +28,90 @@
 }
 
 body {
-    background: var(--bg-light);
+    background-color: var(--bg-light);
     color: var(--blue-dark);
     line-height: 1.6;
 }
 
-/* ---------------------------
-   HEADER - CINTA DE OPCIONES
----------------------------- */
+/* =========================================
+   2. HEADER Y NAVEGACIÓN (Corrección Logo)
+========================================= */
 header {
-    background: var(--blue-dark);
-    padding: 15px 0;
-    box-shadow: 0px 2px 8px rgba(0,0,0,0.15);
+    background-color: var(--blue-dark);
+    padding: 0;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
 }
 
-header nav {
+.navbar {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Ancho máximo para que no se estire infinito */
+    margin: 0 auto;    /* Centrado */
+    padding: 10px 20px;
+    height: 70px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* AQUÍ ESTÁ EL ARREGLO DEL LOGO GIGANTE */
+.nav-logo {
+    height: 40px;      /* Altura fija pequeña */
+    width: auto;       /* Ancho automático */
+    object-fit: contain;
+}
+
+.brand-name {
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
     gap: 20px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--gray-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--white);
 }
 
 .nav-btn {
-    background: transparent;
-    border: none;
-    color: var(--white);
-    font-size: 16px;
-    cursor: pointer;
-    padding: 10px 16px;
+    background: var(--orange-light);
+    color: var(--blue-dark) !important; /* Importante para sobreescribir */
+    padding: 8px 16px;
     border-radius: 6px;
+    border: none;
+    font-weight: bold !important;
+    cursor: pointer;
     transition: 0.3s ease;
 }
 
 .nav-btn:hover {
-    background: var(--blue-light);
+    background: var(--orange-dark);
+    color: var(--white) !important;
 }
 
-.nav-btn.active {
-    background: var(--orange-light);
-    color: var(--blue-dark);
-    font-weight: bold;
-}
-
-/* ---------------------------
-   VIEWS
----------------------------- */
-.view {
-    display: none;
-}
-
-.view.active {
-    display: block;
-    padding: 50px 20px;
-    animation: fadeIn 0.3s ease;
-}
-
-/* Animación suave */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ---------------------------
-   TARJETAS / SECCIONES
----------------------------- */
+/* =========================================
+   3. ESTILOS GENERALES (Botones, Inputs, Cards)
+========================================= */
 .card {
     background: var(--white);
     border-radius: 12px;
@@ -109,9 +126,6 @@ header nav {
     margin: 40px auto;
 }
 
-/* ---------------------------
-   BOTONES
----------------------------- */
 .btn {
     padding: 10px 18px;
     border-radius: 8px;
@@ -122,7 +136,6 @@ header nav {
     font-weight: 500;
 }
 
-/* Botón naranja principal */
 .btn-primary {
     background: var(--orange-light);
     color: var(--blue-dark);
@@ -132,31 +145,12 @@ header nav {
     background: var(--orange-dark);
 }
 
-/* Botón azul */
-.btn-blue {
-    background: var(--blue-medium);
-    color: white;
-}
-
-.btn-blue:hover {
-    background: var(--blue-light);
-}
-
-/* ---------------------------
-   FORMULARIOS
----------------------------- */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 400px;
-}
-
 input {
     padding: 12px;
     border: 2px solid var(--blue-light);
     border-radius: 8px;
     font-size: 16px;
+    width: 100%; /* Asegura que ocupen el espacio */
     transition: border-color 0.3s ease;
 }
 
@@ -165,212 +159,346 @@ input:focus {
     outline: none;
 }
 
-/* ---------------------------
-   TITULOS
----------------------------- */
-h1, h2, h3 {
+/* =========================================
+   4. CATÁLOGO DE PAQUETES (Grid y Tarjetas)
+========================================= */
+.packages-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-header h1 {
+    font-size: 2.5rem;
     color: var(--blue-dark);
+    margin-bottom: 10px;
 }
 
-h1 span, h2 span {
-    color: var(--orange-dark);
+/* --- LA REJILLA MÁGICA --- */
+.packages-grid {
+    display: grid;
+    /* Crea columnas automáticas de mínimo 320px de ancho */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+    gap: 30px;
 }
 
-/* ---------------------------
-   IMAGENES
----------------------------- */
-.img-center {
-    display: block;
-    margin: auto;
-    max-width: 100%;
+/* --- TARJETA DE PAQUETE --- */
+.promo-card {
+    background: var(--white);
     border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+/* =========================================
+   1. VARIABLES Y CONFIGURACIÓN BASE
+========================================= */
+:root {
+    --orange-light: #F6A329;
+    --orange-dark: #E46A1F;
+    --blue-dark: #0F375A;
+    --blue-medium: #0A5C8F;
+    --blue-light: #1F82C0;
+    --bg-light: #F8F8F8;
+    --white: #FFFFFF;
+    --gray-light: #E0E0E0;
+    --gray-medium: #95a5a6;
+    --gray-dark: #7f8c8d;
+    --success-light: #d4edda;
+    --success-dark: #155724;
+    --error-light: #ffe6e6;
+    --error-dark: #d32f2f; /* Rojo intenso para ofertas/errores */
+    --warning-light: #fff3e6;
 }
 
-/* ---------------------------
-   ESTILOS ESPECÍFICOS PARA LOGIN
----------------------------- */
-.forgot-password-container {
-    text-align: right;
-    margin: 10px 0;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
-.forgot-password {
-    color: var(--blue-medium);
+body {
+    background-color: var(--bg-light);
+    color: var(--blue-dark);
+    line-height: 1.6;
+}
+
+/* =========================================
+   2. HEADER Y NAVEGACIÓN (Corrección Logo)
+========================================= */
+header {
+    background-color: var(--blue-dark);
+    padding: 0;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Ancho máximo para que no se estire infinito */
+    margin: 0 auto;    /* Centrado */
+    padding: 10px 20px;
+    height: 70px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* AQUÍ ESTÁ EL ARREGLO DEL LOGO GIGANTE */
+.nav-logo {
+    height: 40px;      /* Altura fija pequeña */
+    width: auto;       /* Ancho automático */
+    object-fit: contain;
+}
+
+.brand-name {
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--gray-light);
     text-decoration: none;
-    font-size: 14px;
-    cursor: pointer;
+    font-weight: 500;
     transition: color 0.3s ease;
 }
 
-.forgot-password:hover {
-    color: var(--blue-light);
-    text-decoration: underline;
+.nav-links a:hover, .nav-links a.active {
+    color: var(--white);
 }
 
-.register-link {
-    margin-top: 12px;
-    color: var(--gray-medium);
-    font-size: 14px;
-    text-align: center;
+.nav-btn {
+    background: var(--orange-light);
+    color: var(--blue-dark) !important; /* Importante para sobreescribir */
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold !important;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
-.register-link a {
-    color: var(--blue-medium);
-    text-decoration: none;
+.nav-btn:hover {
+    background: var(--orange-dark);
+    color: var(--white) !important;
 }
 
-.register-link a:hover {
-    text-decoration: underline;
+/* =========================================
+   3. ESTILOS GENERALES (Botones, Inputs, Cards)
+========================================= */
+.card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    margin: 20px auto;
+    max-width: 900px;
 }
 
-#login-msg {
-    margin-top: 10px;
-    padding: 12px;
+.login-card {
+    max-width: 520px !important;
+    margin: 40px auto;
+}
+
+.btn {
+    padding: 10px 18px;
     border-radius: 8px;
-    text-align: center;
-    font-size: 14px;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s ease;
     font-weight: 500;
 }
 
-/* ---------------------------
-   MODAL DE RECUPERACIÓN
----------------------------- */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(15, 55, 90, 0.8);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    animation: fadeIn 0.3s ease;
-}
-
-.modal-content {
-    background-color: var(--white);
-    border-radius: 12px;
-    padding: 30px;
-    width: 90%;
-    max-width: 450px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-    from { 
-        opacity: 0; 
-        transform: translateY(20px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    }
-}
-
-.modal h3 {
-    margin-bottom: 15px;
+.btn-primary {
+    background: var(--orange-light);
     color: var(--blue-dark);
-    text-align: center;
-    font-size: 24px;
 }
 
-.modal p {
-    margin-bottom: 20px;
-    text-align: center;
-    color: var(--gray-medium);
-    line-height: 1.5;
+.btn-primary:hover {
+    background: var(--orange-dark);
 }
 
-.modal input {
-    width: 100%;
-    padding: 12px 15px;
-    margin-bottom: 15px;
+input {
+    padding: 12px;
     border: 2px solid var(--blue-light);
     border-radius: 8px;
     font-size: 16px;
+    width: 100%; /* Asegura que ocupen el espacio */
+    transition: border-color 0.3s ease;
 }
 
-.modal input:focus {
+input:focus {
     border-color: var(--orange-light);
+    outline: none;
 }
 
-.success-message {
-    background-color: var(--success-light);
-    color: var(--success-dark);
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 15px;
-    display: none;
+/* =========================================
+   4. CATÁLOGO DE PAQUETES (Grid y Tarjetas)
+========================================= */
+.packages-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.section-header {
     text-align: center;
-    font-weight: 500;
+    margin-bottom: 40px;
 }
 
-.modal-actions {
+.section-header h1 {
+    font-size: 2.5rem;
+    color: var(--blue-dark);
+    margin-bottom: 10px;
+}
+
+/* --- LA REJILLA MÁGICA --- */
+.packages-grid {
+    display: grid;
+    /* Crea columnas automáticas de mínimo 320px de ancho */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+    gap: 30px;
+}
+
+/* --- TARJETA DE PAQUETE --- */
+.promo-card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05);
     display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 20px;
-}
-
-.btn-cancel {
-    background-color: var(--gray-medium);
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
+    flex-direction: column;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: 500;
 }
 
-.btn-send {
-    background-color: var(--blue-medium);
-    color: white;
-    padding: 12px 24px;
+.promo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.card-image-header {
+    position: relative;
+    height: 200px;
+    width: 100%;
+}
+
+.card-image-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto evita que la imagen se deforme */
+    transition: transform 0.3s;
+}
+
+.promo-card:hover .card-image-header img {
+    transform: scale(1.05);
+}
+
+.discount-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    background-color: var(--error-dark);
+    color: var(--white);
+    padding: 5px 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.btn-medida {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    background-color: var(--blue-dark);
+    color: var(--white);
     border: none;
-    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: 500;
 }
 
-.btn-cancel:hover {
-    background-color: var(--gray-dark);
+.card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
-.btn-send:hover {
-    background-color: var(--blue-light);
+.card-title {
+    color: var(--blue-dark);
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
-/* ---------------------------
-   RESPONSIVE
----------------------------- */
-@media (max-width: 768px) {
-    .modal-content {
-        padding: 20px;
-        margin: 20px;
-    }
-    
-    .modal-actions {
-        flex-direction: column;
-    }
-    
-    .btn-cancel, .btn-send {
-        width: 100%;
-    }
-    
-    .login-card {
-        margin: 20px;
-        padding: 20px;
-    }
+.card-subtitle {
+    color: var(--blue-medium);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 
-/* ---------------------------
-   HISTORIAL DE VIAJES (NUEVO)
----------------------------- */
+.card-icons {
+    margin-bottom: 20px;
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.card-pricing {
+    margin-top: auto;
+    border-top: 1px solid var(--gray-light);
+    padding-top: 15px;
+}
+
+.price-old {
+    display: block;
+    font-size: 0.9rem;
+    text-decoration: line-through;
+    color: var(--gray-medium);
+}
+
+.price-new {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--error-dark);
+    font-weight: 800;
+}
+
+/* =========================================
+   5. HISTORIAL DE VIAJES (Estilos para history.html)
+========================================= */
 .history-container {
     max-width: 900px;
     margin: 30px auto;
@@ -379,10 +507,8 @@ h1 span, h2 span {
 }
 
 .history-container h1 {
-    margin-bottom: 25px;
-    font-size: 26px;
     text-align: center;
-    color: var(--blue-dark);
+    margin-bottom: 25px;
 }
 
 .trips-list {
@@ -393,455 +519,73 @@ h1 span, h2 span {
 
 .trip-card {
     background: var(--white);
-    border-radius: 12px; /* Mismo borde que tus .card */
+    border-radius: 12px;
     padding: 20px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     border: 1px solid var(--gray-light);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .trip-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     border-color: var(--blue-light);
-}
-
-.trip-info h3 {
-    margin-bottom: 6px;
-    color: var(--blue-dark);
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.trip-info p {
-    color: var(--gray-dark);
-    font-size: 14px;
-    margin-bottom: 10px;
 }
 
 .trip-status {
     display: inline-block;
-    padding: 6px 14px;
-    border-radius: 50px; /* Estilo píldora */
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
 }
 
-/* Usando tus variables de éxito */
-.status-done {
-    background-color: var(--success-light);
-    color: var(--success-dark);
-}
+.status-done { background-color: var(--success-light); color: var(--success-dark); }
+.status-canceled { background-color: var(--error-light); color: var(--error-dark); }
 
-/* Usando tus variables de error */
-.status-canceled {
-    background-color: var(--error-light);
-    color: #c0392b; /* Un rojo oscuro que combina bien con tu error-light */
-}
-
-/* Botón específico para detalles */
 .btn-details {
-    padding: 10px 20px;
     background: var(--blue-light);
-    color: var(--white);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
     border: none;
-    border-radius: 8px;
     cursor: pointer;
-    font-weight: 500;
-    transition: background 0.3s ease;
 }
 
-.btn-details:hover {
-    background: var(--blue-dark);
-}
-
-/* Ajustes Responsive para el Historial */
+/* =========================================
+   6. RESPONSIVE (CELULAR) - SIEMPRE AL FINAL
+========================================= */
 @media (max-width: 768px) {
+    /* Navbar en columna */
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+    }
+    
+    .nav-links {
+        margin-top: 15px;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* Grilla de paquetes a 1 sola columna */
+    .packages-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Tarjetas de historial en columna */
     .trip-card {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
-    
-    .trip-info {
-        width: 100%;
-    }
 
     .btn-details {
         width: 100%;
-        text-align: center;
-        background: var(--orange-light); /* Cambio de color en móvil para resaltar */
-        color: var(--blue-dark);
-    }
-}
-
-/* ---------------------------------
-   AJUSTES HEADER: LOGO EN ESQUINA Y PEQUEÑO
---------------------------------- */
-
-/* Quitamos el padding del header principal para aprovechar el espacio */
-header {
-    background: var(--blue-dark);
-    padding: 0; /* Sin relleno extra */
-    width: 100%;
-    position: sticky; /* Opcional: Para que se quede fijo arriba al bajar */
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; /* Ocupa todo el ancho de la pantalla */
-    max-width: none; /* Quitamos el límite para que llegue a las esquinas */
-    padding: 10px 20px; /* Espacio mínimo en los bordes */
-    height: 60px; /* Altura fija para que se vea ordenado */
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Menos espacio entre logo y texto */
-}
-
-/* Logo "chiquito" */
-.nav-logo {
-    height: 30px; /* Reducimos el tamaño (antes era 40px o más) */
-    width: auto;
-    object-fit: contain;
-}
-
-.brand-name {
-    color: var(--white);
-    font-weight: 600;
-    font-size: 1rem; /* Texto un poco más pequeño también */
-    letter-spacing: 0.5px;
-}
-
-.nav-links {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.nav-links a {
-    color: var(--gray-light);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: var(--white);
-}
-/* =========================================
-   ESTILOS PARA EL CATÁLOGO DE PAQUETES
-========================================= */
-
-.packages-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.section-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.section-header h1 {
-    font-size: 2.5rem;
-    color: var(--blue-dark);
-    margin-bottom: 10px;
-}
-
-/* --- LA REJILLA (GRID) --- */
-.packages-grid {
-    display: grid;
-    /* Crea columnas automáticas de mínimo 350px de ancho */
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
-    gap: 30px; /* Espacio entre tarjetas */
-}
-
-/* --- DISEÑO DE LA TARJETA (CARD) --- */
-.promo-card {
-    background: var(--white);
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    cursor: pointer;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid var(--gray-light);
-    display: flex;
-    flex-direction: column;
-}
-
-.promo-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-}
-
-/* Cabecera con Imagen y Etiquetas */
-.card-image-header {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
-}
-
-.card-image-header img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s;
-}
-
-.promo-card:hover .card-image-header img {
-    transform: scale(1.05);
-}
-
-.discount-badge {
-    position: absolute;
-    bottom: 15px;
-    left: 0;
-    background: var(--error-dark); /* Rojo intenso */
-    color: var(--white);
-    padding: 8px 15px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-}
-
-.btn-medida {
-    position: absolute;
-    bottom: 15px;
-    right: 0;
-    background: var(--blue-dark);
-    color: var(--white);
-    border: none;
-    padding: 8px 15px;
-    font-size: 0.85rem;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    cursor: pointer;
-}
-
-/* Cuerpo de la Tarjeta */
-.card-body {
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.card-title {
-    color: var(--blue-dark);
-    font-size: 1.2rem;
-    font-weight: 800;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-}
-
-.card-subtitle {
-    color: var(--blue-medium);
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 20px;
-    line-height: 1.4;
-}
-
-.card-icons {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 0.9rem;
-    color: var(--gray-dark);
-    margin-bottom: 25px;
-    flex-grow: 1;
-}
-
-/* Sección de Precios */
-.card-pricing {
-    border-top: 1px solid var(--gray-light);
-    padding-top: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.price-old {
-    font-size: 0.9rem;
-    color: var(--gray-medium);
-    text-decoration: line-through;
-}
-
-.price-new {
-    font-size: 1.6rem;
-    color: var(--error-dark); /* Rojo para el precio */
-    font-weight: 800;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .packages-grid {
-        grid-template-columns: 1fr; /* Una sola columna en celular */
-    }
-}/* =========================================
-   ESTILOS PARA EL CATÁLOGO DE PAQUETES
-========================================= */
-
-.packages-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.section-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.section-header h1 {
-    font-size: 2.5rem;
-    color: var(--blue-dark);
-    margin-bottom: 10px;
-}
-
-/* --- LA REJILLA (GRID) --- */
-.packages-grid {
-    display: grid;
-    /* Crea columnas automáticas de mínimo 350px de ancho */
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
-    gap: 30px; /* Espacio entre tarjetas */
-}
-
-/* --- DISEÑO DE LA TARJETA (CARD) --- */
-.promo-card {
-    background: var(--white);
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    cursor: pointer;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid var(--gray-light);
-    display: flex;
-    flex-direction: column;
-}
-
-.promo-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-}
-
-/* Cabecera con Imagen y Etiquetas */
-.card-image-header {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
-}
-
-.card-image-header img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s;
-}
-
-.promo-card:hover .card-image-header img {
-    transform: scale(1.05);
-}
-
-.discount-badge {
-    position: absolute;
-    bottom: 15px;
-    left: 0;
-    background: var(--error-dark); /* Rojo intenso */
-    color: var(--white);
-    padding: 8px 15px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-}
-
-.btn-medida {
-    position: absolute;
-    bottom: 15px;
-    right: 0;
-    background: var(--blue-dark);
-    color: var(--white);
-    border: none;
-    padding: 8px 15px;
-    font-size: 0.85rem;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    cursor: pointer;
-}
-
-/* Cuerpo de la Tarjeta */
-.card-body {
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.card-title {
-    color: var(--blue-dark);
-    font-size: 1.2rem;
-    font-weight: 800;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-}
-
-.card-subtitle {
-    color: var(--blue-medium);
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 20px;
-    line-height: 1.4;
-}
-
-.card-icons {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 0.9rem;
-    color: var(--gray-dark);
-    margin-bottom: 25px;
-    flex-grow: 1;
-}
-
-/* Sección de Precios */
-.card-pricing {
-    border-top: 1px solid var(--gray-light);
-    padding-top: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.price-old {
-    font-size: 0.9rem;
-    color: var(--gray-medium);
-    text-decoration: line-through;
-}
-
-.price-new {
-    font-size: 1.6rem;
-    color: var(--error-dark); /* Rojo para el precio */
-    font-weight: 800;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .packages-grid {
-        grid-template-columns: 1fr; /* Una sola columna en celular */
     }
 }
