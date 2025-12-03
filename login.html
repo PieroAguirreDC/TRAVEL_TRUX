@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - TravelTrux</title>
     <link rel="stylesheet" href="style.css">
+<<<<<<< HEAD
     <link rel="stylesheet" href="login.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
@@ -40,6 +40,48 @@
                     ¿No tienes cuenta?
                     <a href="register.html">Registrarse</a>
                 </p>
+=======
+</head>
+
+<body>
+
+    <!-- Botón para regresar al inicio -->
+    <header style="background: var(--blue-dark); padding: 10px;">
+        <a href="index.html" 
+           style="color: white; text-decoration:none; font-size:16px; margin-left:20px;">
+            ⬅ Regresar al inicio
+        </a>
+    </header>
+
+    <main>
+        <div class="card" style="max-width:450px; margin-top:40px;">
+            <h2 style="text-align:center; margin-bottom:20px;">
+                Iniciar <span>Sesión</span>
+            </h2>
+
+            <form id="login-form">
+
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="Correo electrónico" 
+                    required
+                >
+
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="Contraseña" 
+                    required
+                >
+
+                <button class="btn btn-primary" type="submit">
+                    Iniciar Sesión
+                </button>
+
+                <p id="login-msg" style="text-align:center; margin-top:10px;"></p>
+
+>>>>>>> 5affc4b02dbf622b51d6255b76ed77a458ce8e0a
             </form>
         </div>
     </main>

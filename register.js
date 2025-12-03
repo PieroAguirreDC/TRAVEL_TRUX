@@ -1,7 +1,62 @@
-// Inicializar EmailJS
+// ===============================
+//   EMAILJS - INICIALIZACIÓN
+// ===============================
 emailjs.init("DWR3umpRngp2s9V5-"); // public key
 
-document.getElementById("register-form").addEventListener("submit", function (e) {
+// ===============================
+//   TOKEN API PERÚ
+// ===============================
+const API_TOKEN = "5cfcd56dcb11cc3ebee5812dad1ef0a48f3da29708b0729fb3b7e3b6d586951a";
+
+// ===============================
+//   VALIDAR DNI (API PERÚ)
+// ===============================
+async function validarDNI(dni) {
+    try {
+        const response = await fetch(`https://apiperu.dev/api/dni/${dni}`, {
+            headers: { Authorization: `Bearer ${API_TOKEN}` }
+        });
+
+        const data = await response.json();
+        if (!data.success || !data.data) return null;
+
+        return data.data; // nombres, apellido_paterno, apellido_materno
+    } catch (err) {
+        console.error("Error API DNI:", err);
+        return null;
+    }
+}
+
+// ===============================
+//   AUTOCOMPLETADO DE DNI
+// ===============================
+async function autoCompletarDNI() {
+    const dni = document.getElementById("documento").value.trim();
+    const msg = document.getElementById("register-msg");
+
+    if (dni.length !== 8 || isNaN(dni)) return;
+
+    msg.style.color = "var(--orange-dark)";
+    msg.textContent = "Validando DNI...";
+
+    const info = await validarDNI(dni);
+
+    if (!info) {
+        msg.textContent = "⚠ DNI no válido.";
+        return;
+    }
+
+    // Autocompletar inputs
+    document.getElementById("nombre").value = info.nombres;
+    document.getElementById("apellido").value = `${info.apellido_paterno} ${info.apellido_materno}`;
+
+    msg.textContent = "DNI válido ✓";
+}
+
+// ===============================
+//   EVENTO FORMULARIO REGISTRO
+// ===============================
+document.getElementById("register-form").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const nombre = document.getElementById("nombre").value.trim();
@@ -14,8 +69,22 @@ document.getElementById("register-form").addEventListener("submit", function (e)
     const msg = document.getElementById("register-msg");
 
     msg.style.color = "var(--orange-dark)";
+    msg.textContent = "Validando DNI...";
 
-    // Validación de contraseña segura
+    // ===============================
+    //   VALIDACIÓN DE DNI
+    // ===============================
+    const dniInfo = await validarDNI(documento);
+    if (!dniInfo) {
+        msg.textContent = "⚠ DNI inválido o no encontrado.";
+        return;
+    }
+
+    msg.textContent = "DNI válido. Validando datos...";
+
+    // ===============================
+    //   VALIDACIÓN DE CONTRASEÑA
+    // ===============================
     const regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
     if (!regexPass.test(pass1)) {
@@ -28,17 +97,24 @@ document.getElementById("register-form").addEventListener("submit", function (e)
         return;
     }
 
-    // Verificar si el usuario ya existe
+    // ===============================
+    //   VALIDAR SI YA EXISTE EL CORREO
+    // ===============================
     const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+
     if (usuarios.find(u => u.correo === correo)) {
         msg.textContent = "⚠ Este correo ya está registrado.";
         return;
     }
 
-    // Token único para verificación
+    // ===============================
+    //   CREAR TOKEN DE VERIFICACIÓN
+    // ===============================
     const token = crypto.randomUUID();
 
-    // Crear usuario en LocalStorage
+    // ===============================
+    //   CREAR USUARIO EN LOCALSTORAGE
+    // ===============================
     const nuevoUsuario = {
         nombre,
         apellido,
@@ -47,29 +123,39 @@ document.getElementById("register-form").addEventListener("submit", function (e)
         correo,
         password: pass1,
         estado: "inactivo",
-        token
+        token,
+        dni_validado: {
+            nombres: dniInfo.nombres,
+            apellido_paterno: dniInfo.apellido_paterno,
+            apellido_materno: dniInfo.apellido_materno
+        }
     };
 
     usuarios.push(nuevoUsuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-    // Link de verificación
+    // ===============================
+    //   ENVIAR CORREO DE VERIFICACIÓN
+    // ===============================
     const linkVerificacion = `${window.location.origin}/verify.html?token=${token}`;
 
-    // Enviar correo
     const params = {
         nombreUsuario: nombre,
-        linkVerificacion: linkVerificacion,
-        correo: correo
+        linkVerificacion,
+        correo
     };
 
     emailjs.send("service_et9akmg", "template_c02kkcs", params)
         .then(() => {
             msg.style.color = "green";
-            msg.textContent = "✔ Registro exitoso. Verifique su correo para activar la cuenta.";
+            msg.textContent = "✔ Registro exitoso. Verifique su correo.";
         })
-        .catch((err) => {
-            console.error(err);
-            msg.textContent = "⚠ Error al enviar el correo. Intente nuevamente.";
+        .catch(() => {
+            msg.textContent = "⚠ Error al enviar el correo.";
         });
 });
+
+// ===============================
+//   EVENTO PARA AUTOCOMPLETAR DNI
+// ===============================
+document.getElementById("documento").addEventListener("blur", autoCompletarDNI);

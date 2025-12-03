@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Viaje - Travel Trux</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="login.html" class="nav-btn">Iniciar Sesión</a>
+        </nav>
+    </header>
+
+    <main class="details-container">
+        <section class="trip-gallery">
+            <img id="main-image" src="" alt="Destino principal" class="main-img">
+        </section>
+
+        <div class="trip-content-layout">
+            <section class="trip-info-main">
+                <h1 id="trip-title">Cargando título...</h1>
+                <p id="trip-desc" class="trip-description">...</p>
+                
+                <div class="itinerary-section">
+                    <h2>Itinerario de Viaje</h2>
+                    <ul id="itinerary-list" class="itinerary-list">
+                        </ul>
+                </div>
+            </section>
+
+            <aside class="booking-card">
+                <div class="price-tag">
+                    <span class="label">Precio por persona</span>
+                    <span id="trip-price" class="amount">S/ 0.00</span>
+                </div>
+                
+                <div class="capacity-info">
+                    <strong>Cupos disponibles:</strong> <span id="trip-capacity">0</span>
+                </div>
+
+                <div class="video-preview">
+                    <p>🎥 Ver video del destino</p>
+                </div>
+
+                <button class="btn btn-primary btn-block">¡Reservar Ahora!</button>
+            </aside>
+        </div>
+    </main>
+
+    <script src="detalle.js"></script>
+</body>
+</html>
