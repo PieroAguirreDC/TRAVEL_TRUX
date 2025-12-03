@@ -25,16 +25,15 @@ document.getElementById("login-form").addEventListener("submit", function (e) {
     }
 
     // ============================
-    // VALIDAR EMPLEADO
+    // VALIDACIÓN EMPLEADO
     // ============================
     const empleados = JSON.parse(localStorage.getItem("empleados") || "[]");
 
-    const empleado = empleados.find(e => 
-        e.email === correo && e.password === pass
+    const empleado = empleados.find(emp => 
+        emp.email === correo && emp.password === pass
     );
 
     if (empleado) {
-
         const empleadoUser = {
             correo: empleado.email,
             rol: "empleado",
@@ -47,16 +46,15 @@ document.getElementById("login-form").addEventListener("submit", function (e) {
     }
 
     // ============================
-    // VALIDAR CLIENTE
+    // VALIDACIÓN CLIENTE
     // ============================
     const clientes = JSON.parse(localStorage.getItem("usuarios") || "[]");
 
-    const cliente = clientes.find(c => 
-        c.correo === correo && c.password === pass
+    const cliente = clientes.find(cli =>
+        cli.correo === correo && cli.password === pass
     );
 
     if (cliente) {
-
         const clienteUser = {
             correo: cliente.correo,
             rol: "cliente",

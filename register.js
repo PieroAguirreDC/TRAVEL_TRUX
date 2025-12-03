@@ -4,32 +4,53 @@
 emailjs.init("DWR3umpRngp2s9V5-"); // public key
 
 // ===============================
+//   TOKEN API PERÚ
+// ===============================
+const API_TOKEN = "5cfcd56dcb11cc3ebee5812dad1ef0a48f3da29708b0729fb3b7e3b6d586951a";
+
+// ===============================
 //   VALIDAR DNI (API PERÚ)
 // ===============================
 async function validarDNI(dni) {
     try {
         const response = await fetch(`https://apiperu.dev/api/dni/${dni}`, {
-            headers: { 
-                "Authorization": "Bearer 5cfcd56dcb11cc3ebee5812dad1ef0a48f3da29708b0729fb3b7e3b6d586951a"
-            }
+            headers: { Authorization: `Bearer ${API_TOKEN}` }
         });
 
         const data = await response.json();
+        if (!data.success || !data.data) return null;
 
-        if (data.success && data.data) {
-            return {
-                valido: true,
-                nombres: data.data.nombres,
-                apellidoPaterno: data.data.apellido_paterno,
-                apellidoMaterno: data.data.apellido_materno
-            };
-        }
-
-        return { valido: false };
+        return data.data; // nombres, apellido_paterno, apellido_materno
     } catch (err) {
         console.error("Error API DNI:", err);
-        return { valido: false };
+        return null;
     }
+}
+
+// ===============================
+//   AUTOCOMPLETADO DE DNI
+// ===============================
+async function autoCompletarDNI() {
+    const dni = document.getElementById("documento").value.trim();
+    const msg = document.getElementById("register-msg");
+
+    if (dni.length !== 8 || isNaN(dni)) return;
+
+    msg.style.color = "var(--orange-dark)";
+    msg.textContent = "Validando DNI...";
+
+    const info = await validarDNI(dni);
+
+    if (!info) {
+        msg.textContent = "⚠ DNI no válido.";
+        return;
+    }
+
+    // Autocompletar inputs
+    document.getElementById("nombre").value = info.nombres;
+    document.getElementById("apellido").value = `${info.apellido_paterno} ${info.apellido_materno}`;
+
+    msg.textContent = "DNI válido ✓";
 }
 
 // ===============================
@@ -51,11 +72,10 @@ document.getElementById("register-form").addEventListener("submit", async functi
     msg.textContent = "Validando DNI...";
 
     // ===============================
-    //   VALIDACIÓN DE DNI CON API
+    //   VALIDACIÓN DE DNI
     // ===============================
     const dniInfo = await validarDNI(documento);
-
-    if (!dniInfo.valido) {
+    if (!dniInfo) {
         msg.textContent = "⚠ DNI inválido o no encontrado.";
         return;
     }
@@ -81,13 +101,14 @@ document.getElementById("register-form").addEventListener("submit", async functi
     //   VALIDAR SI YA EXISTE EL CORREO
     // ===============================
     const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+
     if (usuarios.find(u => u.correo === correo)) {
         msg.textContent = "⚠ Este correo ya está registrado.";
         return;
     }
 
     // ===============================
-    //   CREAR TOKEN PARA VERIFICAR
+    //   CREAR TOKEN DE VERIFICACIÓN
     // ===============================
     const token = crypto.randomUUID();
 
@@ -103,11 +124,10 @@ document.getElementById("register-form").addEventListener("submit", async functi
         password: pass1,
         estado: "inactivo",
         token,
-        // Datos devueltos por la API de DNI:
         dni_validado: {
             nombres: dniInfo.nombres,
-            apellido_paterno: dniInfo.apellidoPaterno,
-            apellido_materno: dniInfo.apellidoMaterno
+            apellido_paterno: dniInfo.apellido_paterno,
+            apellido_materno: dniInfo.apellido_materno
         }
     };
 
@@ -128,10 +148,14 @@ document.getElementById("register-form").addEventListener("submit", async functi
     emailjs.send("service_et9akmg", "template_c02kkcs", params)
         .then(() => {
             msg.style.color = "green";
-            msg.textContent = "✔ Registro exitoso. Verifique su correo para activar la cuenta.";
+            msg.textContent = "✔ Registro exitoso. Verifique su correo.";
         })
-        .catch((err) => {
-            console.error(err);
-            msg.textContent = "⚠ Error al enviar el correo. Intente nuevamente.";
+        .catch(() => {
+            msg.textContent = "⚠ Error al enviar el correo.";
         });
 });
+
+// ===============================
+//   EVENTO PARA AUTOCOMPLETAR DNI
+// ===============================
+document.getElementById("documento").addEventListener("blur", autoCompletarDNI);

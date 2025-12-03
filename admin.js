@@ -31,7 +31,6 @@ async function validarDNI_API(dni) {
         if (!data.success || !data.data) return null;
 
         return data.data;
-        // { numero, nombres, apellido_paterno, apellido_materno }
     } catch (error) {
         console.error("Error validando DNI:", error);
         return null;
@@ -42,14 +41,14 @@ async function validarDNI_API(dni) {
 // VARIABLES GLOBALES
 // ===================================
 let empleadoEditIndex = null;
+let clienteEditIndex = null;
 
 // ===================================
 // CAMBIO DE SECCIÓN
 // ===================================
 function cargarSeccion(seccion) {
-
     empleadoEditIndex = null;
-    const cont = document.getElementById("contenido");
+    clienteEditIndex = null;
 
     switch (seccion) {
         case "clientes":
@@ -61,16 +60,16 @@ function cargarSeccion(seccion) {
             break;
 
         case "empleado_register":
-            mostrarFormularioRegistroEmpleado();
+            mostrarFormularioEmpleado();
             break;
 
         default:
-            cont.innerHTML = "<p>Sección desconocida.</p>";
+            document.getElementById("contenido").innerHTML = "<p>Sección desconocida.</p>";
     }
 }
 
 // ===================================
-// LISTAR CLIENTES (TABLA COMPLETA)
+// LISTAR CLIENTES
 // ===================================
 function listarClientes() {
     const clientes = JSON.parse(localStorage.getItem("usuarios") || "[]");
@@ -103,6 +102,7 @@ function listarClientes() {
                 <td style="color:red; font-weight:bold;">${c.password}</td>
                 <td>${c.estado}</td>
                 <td>
+                    <button class="btn btn-warning" onclick="editarCliente(${index})">Editar</button>
                     <button class="btn btn-danger" onclick="eliminarCliente(${index})">Eliminar</button>
                 </td>
             </tr>
@@ -113,6 +113,9 @@ function listarClientes() {
     cont.innerHTML = html;
 }
 
+// ===================================
+// ELIMINAR CLIENTE
+// ===================================
 function eliminarCliente(index) {
     let clientes = JSON.parse(localStorage.getItem("usuarios") || "[]");
     if (!confirm("¿Eliminar cliente?")) return;
@@ -124,97 +127,167 @@ function eliminarCliente(index) {
 }
 
 // ===================================
-// FORMULARIO REGISTRAR / EDITAR EMPLEADO
+// EDITAR CLIENTE
 // ===================================
-function mostrarFormularioRegistroEmpleado() {
+function editarCliente(index) {
+    clienteEditIndex = index;
+    mostrarFormularioCliente();
+}
+
+// ===================================
+// FORMULARIO CLIENTE
+// ===================================
+function mostrarFormularioCliente() {
     const cont = document.getElementById("contenido");
+    let clientes = JSON.parse(localStorage.getItem("usuarios") || "[]");
 
-    const isEdit = empleadoEditIndex !== null;
-
-    let empleados = JSON.parse(localStorage.getItem("empleados") || "[]");
-    let empleado = isEdit ? empleados[empleadoEditIndex] : {
-        nombres: "",
-        apellidos: "",
-        email: "",
-        celular: "",
-        dni: "",
-        password: ""
-    };
+    const cliente = clientes[clienteEditIndex];
 
     cont.innerHTML = `
         <div class="card" style="max-width:650px; margin:auto;">
-            <h2 style="margin-bottom: 20px;">
-                ${isEdit ? "Editar Empleado" : "Registrar Empleado"}
-            </h2>
+            <h2>Editar Cliente</h2>
 
-            <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="display:flex; flex-direction:column; gap:15px;">
 
                 <div>
-                    <label>Nombres:</label>
-                    <input id="emp_nombre" type="text" value="${empleado.nombres}">
+                    <label>Nombre:</label>
+                    <input id="cli_nombre" type="text" value="${cliente.nombre}">
                 </div>
 
                 <div>
-                    <label>Apellidos:</label>
-                    <input id="emp_apellidos" type="text" value="${empleado.apellidos}">
+                    <label>Apellido:</label>
+                    <input id="cli_apellido" type="text" value="${cliente.apellido}">
                 </div>
 
                 <div>
-                    <label>Email:</label>
-                    <input id="emp_email" type="email" value="${empleado.email}">
+                    <label>Teléfono:</label>
+                    <input id="cli_telefono" type="text" maxlength="9" value="${cliente.telefono}">
                 </div>
 
                 <div>
-                    <label>Celular (9 dígitos):</label>
-                    <input id="emp_celular" type="text" maxlength="9" value="${empleado.celular}">
+                    <label>DNI:</label>
+                    <input id="cli_dni" type="text" maxlength="8" value="${cliente.documento}">
                 </div>
 
                 <div>
-                    <label>DNI (8 dígitos):</label>
-                    <input id="emp_dni" type="text" maxlength="8" value="${empleado.dni}" onblur="buscarDNI()">
+                    <label>Correo:</label>
+                    <input id="cli_correo" type="email" value="${cliente.correo}">
                 </div>
 
-                <div>
-                    <label>Contraseña (8 dígitos):</label>
-                    <input id="emp_pass" type="password" maxlength="8" value="${empleado.password}">
+                <div style="text-align:center;">
+                    <button class="btn btn-success" onclick="guardarCliente()">Guardar Cambios</button>
                 </div>
-
-                <div style="text-align:center; margin-top:10px;">
-                    <button class="btn btn-success" onclick="guardarEmpleado()">
-                        ${isEdit ? "Guardar Cambios" : "Registrar Empleado"}
-                    </button>
-                </div>
-
             </div>
         </div>
     `;
 }
 
 // ===================================
-// AUTO-LLENAR DATOS DESDE LA API
+// GUARDAR CLIENTE EDITADO
 // ===================================
-async function buscarDNI() {
-    const dni = document.getElementById("emp_dni").value.trim();
+async function guardarCliente() {
+    let clientes = JSON.parse(localStorage.getItem("usuarios") || "[]");
 
+    const nombre = document.getElementById("cli_nombre").value.trim();
+    const apellido = document.getElementById("cli_apellido").value.trim();
+    const telefono = document.getElementById("cli_telefono").value.trim();
+    const dni = document.getElementById("cli_dni").value.trim();
+    const correo = document.getElementById("cli_correo").value.trim();
+
+    if (!nombre || !apellido || !telefono || !dni || !correo) {
+        alert("Complete todos los campos.");
+        return;
+    }
+
+    const dniInfo = await validarDNI_API(dni);
+    if (!dniInfo) {
+        alert("El DNI ingresado no es válido.");
+        return;
+    }
+
+    clientes[clienteEditIndex] = {
+        ...clientes[clienteEditIndex],
+        nombre,
+        apellido,
+        telefono,
+        documento: dni,
+        correo
+    };
+
+    localStorage.setItem("usuarios", JSON.stringify(clientes));
+
+    alert("Cliente actualizado.");
+    listarClientes();
+}
+
+// ===================================
+// FORMULARIO EMPLEADO (REGISTRAR / EDITAR)
+// ===================================
+function mostrarFormularioEmpleado() {
+    const cont = document.getElementById("contenido");
+
+    const isEdit = empleadoEditIndex !== null;
+
+    let empleados = JSON.parse(localStorage.getItem("empleados") || "[]");
+    let empleado = isEdit
+        ? empleados[empleadoEditIndex]
+        : { nombres: "", apellidos: "", email: "", celular: "", dni: "", password: "" };
+
+    cont.innerHTML = `
+        <div class="card" style="max-width:650px; margin:auto;">
+            <h2>${isEdit ? "Editar Empleado" : "Registrar Empleado"}</h2>
+
+            <div style="display:flex; flex-direction:column; gap:15px;">
+
+                <label>Nombres:</label>
+                <input id="emp_nombre" type="text" value="${empleado.nombres}">
+
+                <label>Apellidos:</label>
+                <input id="emp_apellidos" type="text" value="${empleado.apellidos}">
+
+                <label>Email:</label>
+                <input id="emp_email" type="email" value="${empleado.email}">
+
+                <label>Celular (9 dígitos):</label>
+                <input id="emp_celular" type="text" maxlength="9" value="${empleado.celular}">
+
+                <label>DNI (8 dígitos):</label>
+                <input id="emp_dni" type="text" maxlength="8" value="${empleado.dni}" onblur="buscarDNI_Empleado()">
+
+                <label>Contraseña:</label>
+                <input id="emp_pass" type="text" value="${empleado.password}">
+
+                <button class="btn btn-success" onclick="guardarEmpleado()">
+                    ${isEdit ? "Guardar Cambios" : "Registrar Empleado"}
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+// ===================================
+// AUTO-LLENADO DNI PARA EMPLEADOS
+// ===================================
+async function buscarDNI_Empleado() {
+    const dni = document.getElementById("emp_dni").value.trim();
     if (dni.length !== 8 || isNaN(dni)) return;
 
     const data = await validarDNI_API(dni);
 
     if (!data) {
-        alert("DNI no válido o no encontrado.");
+        alert("DNI no válido.");
         return;
     }
 
     document.getElementById("emp_nombre").value = data.nombres;
-    document.getElementById("emp_apellidos").value =
-        `${data.apellido_paterno} ${data.apellido_materno}`;
+    document.getElementById("emp_apellidos").value = `${data.apellido_paterno} ${data.apellido_materno}`;
 }
 
 // ===================================
-// GUARDAR EMPLEADO (REGISTRO + EDICIÓN)
+// GUARDAR EMPLEADO
 // ===================================
 async function guardarEmpleado() {
-    let empleados = JSON.parse(localStorage.getItem("empleados") || []);
+    let empleados = JSON.parse(localStorage.getItem("empleados") || "[]");
 
     const nombres = document.getElementById("emp_nombre").value.trim();
     const apellidos = document.getElementById("emp_apellidos").value.trim();
@@ -228,47 +301,34 @@ async function guardarEmpleado() {
         return;
     }
 
-    if (celular.length !== 9 || isNaN(celular)) {
+    if (celular.length !== 9) {
         alert("El celular debe tener 9 dígitos.");
         return;
     }
 
-    if (dni.length !== 8 || isNaN(dni)) {
+    if (dni.length !== 8) {
         alert("El DNI debe tener 8 dígitos.");
         return;
     }
 
-    // VALIDACIÓN REAL DE DNI
-    const persona = await validarDNI_API(dni);
-    if (!persona) {
-        alert("El DNI ingresado NO es válido.");
+    const dniInfo = await validarDNI_API(dni);
+    if (!dniInfo) {
+        alert("El DNI ingresado no existe.");
         return;
     }
 
-    if (pass.length !== 8) {
-        alert("La contraseña debe tener 8 dígitos.");
-        return;
-    }
-
-    const nuevoEmpleado = {
-        nombres,
-        apellidos,
-        email,
-        celular,
-        dni,
-        password: pass
-    };
+    const nuevo = { nombres, apellidos, email, celular, dni, password: pass };
 
     if (empleadoEditIndex === null) {
-        empleados.push(nuevoEmpleado);
+        empleados.push(nuevo);
     } else {
-        empleados[empleadoEditIndex] = nuevoEmpleado;
+        empleados[empleadoEditIndex] = nuevo;
     }
 
     localStorage.setItem("empleados", JSON.stringify(empleados));
 
-    alert("Empleado guardado correctamente.");
-    cargarSeccion("empleados_list");
+    alert("Empleado guardado.");
+    listarEmpleados();
 }
 
 // ===================================
@@ -319,14 +379,15 @@ function listarEmpleados() {
 // ===================================
 function editarEmpleado(index) {
     empleadoEditIndex = index;
-    mostrarFormularioRegistroEmpleado();
+    mostrarFormularioEmpleado();
 }
 
 // ===================================
 // ELIMINAR EMPLEADO
 // ===================================
 function eliminarEmpleado(index) {
-    let empleados = JSON.parse(localStorage.getItem("empleados") || []);
+    let empleados = JSON.parse(localStorage.getItem("empleados") || "[]");
+
     if (!confirm("¿Eliminar empleado?")) return;
 
     empleados.splice(index, 1);
