@@ -2,105 +2,52 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - TravelTrux</title>
     <link rel="stylesheet" href="style.css">
-<<<<<<< HEAD
-    <link rel="stylesheet" href="login.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
+
     <header>
-        <nav>
-            <button onclick="window.location.href='index.html'" class="nav-btn">Inicio</button>
+        <nav class="navbar">
+            <div class="logo-container">
+                <img src="logo Travel.png" alt="TravelTrux" class="nav-logo">
+                <span class="brand-name">TRAVELTRUX</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Volver al Inicio</a>
+            </div>
         </nav>
     </header>
 
-    <main>
+    <main class="packages-container">
         <div class="card login-card">
-            <h2>Iniciar Sesión</h2>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="logo Travel.png" alt="Logo" style="height: 60px;">
+                <h2 style="color: var(--blue-dark); margin-top: 10px;">Iniciar Sesión</h2>
+                <p style="color: var(--gray-dark);">Ingresa a tu cuenta para continuar</p>
+            </div>
 
-            <form id="login-form">
-                <input type="email" id="login-correo" placeholder="Correo electrónico" required>
-                <input type="password" id="login-password" placeholder="Contraseña" required>
-                
-                <!-- Enlace para recuperar contraseña -->
-                <div class="forgot-password-container">
-                    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+            <form id="loginForm">
+                <div style="margin-bottom: 15px;">
+                    <label style="font-weight: 600; color: var(--blue-dark);">Correo Electrónico</label>
+                    <input type="email" id="email" placeholder="ejemplo@traveltrux.com" required>
                 </div>
 
-                <button class="btn btn-blue" type="submit">
-                    Ingresar
-                </button>
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; color: var(--blue-dark);">Contraseña</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
 
-                <!-- Mensaje de estado del login -->
-                <div id="login-msg"></div>
-
-                <p class="register-link">
-                    ¿No tienes cuenta?
-                    <a href="register.html">Registrarse</a>
-                </p>
-=======
-</head>
-
-<body>
-
-    <!-- Botón para regresar al inicio -->
-    <header style="background: var(--blue-dark); padding: 10px;">
-        <a href="index.html" 
-           style="color: white; text-decoration:none; font-size:16px; margin-left:20px;">
-            ⬅ Regresar al inicio
-        </a>
-    </header>
-
-    <main>
-        <div class="card" style="max-width:450px; margin-top:40px;">
-            <h2 style="text-align:center; margin-bottom:20px;">
-                Iniciar <span>Sesión</span>
-            </h2>
-
-            <form id="login-form">
-
-                <input 
-                    type="email" 
-                    id="email" 
-                    placeholder="Correo electrónico" 
-                    required
-                >
-
-                <input 
-                    type="password" 
-                    id="password" 
-                    placeholder="Contraseña" 
-                    required
-                >
-
-                <button class="btn btn-primary" type="submit">
-                    Iniciar Sesión
-                </button>
-
-                <p id="login-msg" style="text-align:center; margin-top:10px;"></p>
-
->>>>>>> 5affc4b02dbf622b51d6255b76ed77a458ce8e0a
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem;">Ingresar</button>
             </form>
+
+            <div class="register-link" style="text-align: center; margin-top: 15px; font-size: 0.9rem;">
+                ¿No tienes cuenta? <a href="register.html" style="color: var(--blue-medium); font-weight: bold;">Regístrate aquí</a>
+            </div>
         </div>
     </main>
-
-    <!-- Modal para recuperar contraseña -->
-    <div id="recoveryModal" class="modal">
-        <div class="modal-content">
-            <h3>Recuperar contraseña</h3>
-            <p>Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
-            <input type="email" id="recovery-email" placeholder="Correo electrónico">
-            <div class="success-message" id="successMessage">
-                ¡Enlace de recuperación enviado! Revisa tu correo electrónico.
-            </div>
-            <div class="modal-actions">
-                <button class="btn-cancel" type="button">Cancelar</button>
-                <button class="btn-send" type="button">Enviar enlace</button>
-            </div>
-        </div>
-    </div>
 
     <script src="login.js"></script>
 </body>

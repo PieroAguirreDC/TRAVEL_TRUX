@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Empleado - TravelTrux</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header style="background-color: #2c3e50;"> <nav class="navbar">
+            <div class="logo-container">
+                <img src="logo Travel.png" alt="TravelTrux" class="nav-logo">
+                <span class="brand-name">EMPLEADO</span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn" onclick="cerrarSesion()">Cerrar Sesión</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="packages-container">
+        <div class="section-header">
+            <h1>Panel de Gestión</h1>
+            <p>Bienvenido al área de empleados.</p>
+        </div>
+        <div style="text-align: center; padding: 50px;">
+            <h2>🚧 Tareas Pendientes</h2>
+            <p>Selecciona una opción del menú para comenzar.</p>
+        </div>
+    </main>
+
+    <script>
+        function cerrarSesion() {
+            localStorage.removeItem('usuarioActual');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
