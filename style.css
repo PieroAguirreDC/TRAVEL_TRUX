@@ -429,4 +429,653 @@ input:focus {
     .admin-grid {
         grid-template-columns: 1fr;
     }
+}/* =========================================
+   7. ESTILOS PARA PANEL DE EMPLEADO
+========================================= */
+
+/* Clase específica para el panel de empleado */
+body.empleado-panel {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Responsive para panel de empleado */
+@media (max-width: 768px) {
+    body.empleado-panel {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        margin-bottom: 20px;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+    
+    .management-panels {
+        grid-template-columns: 1fr;
+    }
+    
+    .trip-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .trip-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .datetime-input {
+        flex-direction: column;
+    }
+    
+    .trip-details {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .filter-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+}/* =========================================
+   ESTILOS ESPECÍFICOS PARA PANEL DE EMPLEADO
+========================================= */
+
+/* Layout principal */
+body.empleado-panel {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bg-light);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background: var(--blue-dark);
+    color: white;
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.sidebar-header {
+    padding: 0 25px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.sidebar-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-header h2 i {
+    color: var(--orange-light);
+}
+
+.nav-menu {
+    flex-grow: 1;
+    padding: 0 15px;
+}
+
+.nav-item {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 15px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.nav-link.active {
+    background-color: var(--orange-light);
+    color: var(--blue-dark);
+}
+
+.nav-link i {
+    width: 20px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.logout-section {
+    padding: 20px 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+}
+
+.btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    padding: 12px 15px;
+    background-color: rgba(231, 76, 60, 0.2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-logout:hover {
+    background-color: var(--error-dark);
+}
+
+/* Contenido principal */
+.main-content {
+    flex-grow: 1;
+    margin-left: 280px;
+    padding: 30px;
+    width: calc(100% - 280px);
+}
+
+.header {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    color: var(--blue-dark);
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: var(--gray-dark);
+    font-size: 1.1em;
+}
+
+/* Contenedor principal */
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Paneles de gestión */
+.management-panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+@media (max-width: 1024px) {
+    .management-panels {
+        grid-template-columns: 1fr;
+    }
+}
+
+.panel {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid var(--blue-light);
+}
+
+.panel h2 {
+    color: var(--blue-dark);
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.panel h2 i {
+    color: var(--blue-light);
+}
+
+/* Formulario */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--blue-dark);
+    font-weight: 600;
+}
+
+.form-group input, 
+.form-group textarea, 
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--blue-light);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    font-family: 'Poppins', sans-serif;
+    color: var(--blue-dark);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus, 
+.form-group select:focus {
+    outline: none;
+    border-color: var(--orange-light);
+}
+
+.datetime-input {
+    display: flex;
+    gap: 15px;
+}
+
+.datetime-input input {
+    flex: 1;
+}
+
+.btn-add {
+    background: var(--orange-light);
+    color: var(--blue-dark);
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-add:hover {
+    background: var(--orange-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(244, 163, 41, 0.3);
+}
+
+/* Lista de viajes */
+.trips-list {
+    list-style: none;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.trip-item {
+    background: var(--white);
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--blue-light);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border: 1px solid var(--gray-light);
+}
+
+.trip-item:hover {
+    transform: translateX(5px);
+    border-color: var(--blue-light);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.trip-info {
+    flex: 1;
+}
+
+.trip-info h3 {
+    color: var(--blue-dark);
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.trip-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.trip-detail {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--gray-dark);
+    font-size: 14px;
+}
+
+.trip-detail i {
+    color: var(--blue-light);
+}
+
+.trip-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 18px;
+}
+
+.btn-icon:hover {
+    transform: scale(1.1);
+}
+
+.btn-edit {
+    background: var(--blue-light);
+    color: white;
+}
+
+.btn-edit:hover {
+    background: var(--blue-medium);
+}
+
+.btn-delete {
+    background: var(--error-dark);
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #b71c1c;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 40px;
+    color: var(--gray-medium);
+    background-color: white;
+    border-radius: 10px;
+    border: 2px dashed var(--gray-light);
+}
+
+.empty-state i {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #bdc3c7;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: var(--blue-dark);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.btn-cancel {
+    background-color: var(--gray-medium);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.btn-cancel:hover {
+    background-color: var(--gray-dark);
+}
+
+.btn-save {
+    background: var(--orange-light);
+    color: var(--blue-dark);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.btn-save:hover {
+    background: var(--orange-dark);
+}
+
+/* Estilos para scrollbar */
+.trips-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.trips-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.trips-list::-webkit-scrollbar-thumb {
+    background: var(--blue-light);
+    border-radius: 10px;
+}
+
+.trips-list::-webkit-scrollbar-thumb:hover {
+    background: var(--blue-medium);
+}
+
+/* Notificaciones */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    z-index: 1001;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: slideIn 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification.success {
+    background-color: var(--success-dark);
+}
+
+.notification.warning {
+    background-color: var(--error-dark);
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+/* Estilos adicionales */
+.btn-filter {
+    padding: 8px 16px;
+    border: 2px solid var(--blue-light);
+    background-color: var(--white);
+    color: var(--blue-light);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-filter:hover {
+    background-color: #e8f4fc;
+}
+
+.btn-filter.active {
+    background-color: var(--blue-light);
+    color: var(--white);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        margin-bottom: 20px;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+    
+    .datetime-input {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Responsive adicional para panel de empleado */
+@media (max-width: 768px) {
+    body.empleado-panel {
+        flex-direction: column;
+    }
+    
+    .management-panels {
+        grid-template-columns: 1fr;
+    }
+    
+    .trip-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .trip-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .datetime-input {
+        flex-direction: column;
+    }
+    
+    .trip-details {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .filter-buttons {
+        width: 100%;
+        justify-content: center;
+    }
 }
