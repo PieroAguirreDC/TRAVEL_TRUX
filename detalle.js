@@ -1,9 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* =============================================================
-       1. BASE DE DATOS DE VIAJES (SINCRONIZADA Y COMPLETA)
-       ¡Tiene que tener los mismos IDs y fotos que app.js!
-    ============================================================= */
     const baseDatosViajes = [
         {
             id: 1, 
@@ -12,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
             precio: 1450.00,
             precioAntes: 1800.00,
             cupos: 20,
-            // FOTO REAL DE UNSPLASH
             imagen: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=1000&q=80",
             itinerario: [
                 "Día 1: Recepción en aeropuerto, traslado al hotel y mate de coca.",
@@ -28,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
             precio: 890.00,
             precioAntes: 1100.00,
             cupos: 15,
-            // FOTO REAL DE UNSPLASH
             imagen: "https://images.unsplash.com/photo-1534234828569-1f353be91847?w=1000&q=80",
             itinerario: [
                 "Día 1: Bienvenida con coctel y tarde libre en la playa.",
@@ -43,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
             precio: 1200.00,
             precioAntes: 1500.00,
             cupos: 10,
-            // FOTO REAL DE UNSPLASH
             imagen: "https://images.unsplash.com/photo-1554260570-e9689a3418b8?w=1000&q=80",
             itinerario: [
                 "Día 1: Navegación por el río Amazonas hasta el Lodge.",
@@ -53,7 +46,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Día 5: Retorno a la ciudad de Iquitos."
             ]
         },
-        // (Si tienes más viajes, agrégalos aquí con sus IDs correctos)
+        {
+            id: 4,
+            titulo: "TESOROS DE TRUJILLO",
+            subtitulo: "Chan Chan y Balneario de Huanchaco",
+            precio: 450.00,
+            precioAntes: 600.00,
+            cupos: 8,
+            imagen: "https://www.peru.travel/Contenido/Atractivo/Imagen/en/105/1.1/Principal/Huanchaco.jpg",
+            itinerario: [
+                "Día 1: City Tour por el centro histórico de Trujillo.",
+                "Día 2: Visita a la ciudadela de Chan Chan y playa Huanchaco.",
+                "Día 3: Tour a las Huacas del Sol y la Luna."
+            ]
+        },
+        {
+            id: 5,
+            titulo: "LIMA GASTRONÓMICA",
+            subtitulo: "Capital del sabor y la historia",
+            precio: 380.00,
+            precioAntes: 550.00,
+            cupos: 12,
+            imagen: "https://media.traveler.es/photos/61376a6b568343e2e5052341/master/w_1600%2Cc_limit/196620.jpg",
+            itinerario: [
+                "Día 1: Circuito Mágico del Agua y cena show.",
+                "Día 2: Tour gastronómico por mercados y clases de cocina.",
+                "Día 3: Paseo por Barranco y Miraflores."
+            ]
+        },
+        {
+            id: 6,
+            titulo: "TRIO DE LOS BALCANES",
+            subtitulo: "Europa clásica: Zagreb, Sarajevo y Dubrovnik",
+            precio: 1602.76,
+            precioAntes: 1763.00,
+            cupos: 5,
+            imagen: "https://www.viajeselcorteingles.es/imagenes/v3/ofertas/cruceros/crucero-fluvial/rio-danubio/1.jpg",
+            itinerario: [
+                "Día 1-3: Zagreb - Recorrido por la ciudad alta y baja.",
+                "Día 4-6: Sarajevo - Historia y cultura en el corazón de los Balcanes.",
+                "Día 7-9: Dubrovnik - La perla del Adriático y sus murallas.",
+                "Día 10: Traslado al aeropuerto internacional."
+            ]
+        }
     ];
 
     /* 2. RECUPERAR EL ID SELECCIONADO */
@@ -67,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (viaje) {
             mostrarDetalles(viaje);
         } else {
-            // Si el ID existe pero no lo encuentro en la base de datos local
             console.error("Viaje ID no encontrado en detalle.js:", viajeId);
             document.getElementById('loading-msg').textContent = "Error: Viaje no encontrado.";
         }
@@ -85,15 +119,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('detail-old-price').textContent = `S/ ${viaje.precioAntes.toFixed(2)}`;
         document.getElementById('detail-cupos').textContent = viaje.cupos;
         
-        // Imagen (Ahora sí carga porque es el link correcto)
+        // Imagen
         const img = document.getElementById('detail-image');
         img.src = viaje.imagen;
         img.onerror = function() {
-            // Fallback por si la imagen falla
             this.src = 'https://via.placeholder.com/800x400?text=Imagen+No+Disponible';
         };
 
-        // Itinerario (Bucle para crear la lista)
+        // Itinerario
         const listaItinerario = document.getElementById('detail-itinerary');
         listaItinerario.innerHTML = ''; // Limpiar
 
@@ -112,7 +145,21 @@ document.addEventListener('DOMContentLoaded', () => {
             listaItinerario.innerHTML = '<li>Información de itinerario pendiente.</li>';
         }
 
-        // Mostrar el contenido y ocultar mensaje de carga
+        // --- AQUÍ ESTÁ EL CAMBIO CLAVE EN EL HTML DE LA TARJETA LATERAL ---
+        // Buscamos el contenedor lateral (la tarjeta de precios) y actualizamos su botón
+        const asideCard = document.querySelector('aside .card');
+        if(asideCard) {
+            // Reemplazamos el botón genérico por uno con onclick
+            // (Nota: Esto es una forma dinámica, pero como tu HTML ya tiene la estructura, 
+            //  podemos simplemente asignar el evento al botón existente si tiene una clase o ID)
+            
+            const btnReservar = asideCard.querySelector('button.btn-primary');
+            if(btnReservar) {
+                btnReservar.setAttribute('onclick', 'irAPagar()');
+            }
+        }
+
+        // Mostrar el contenido
         const loading = document.getElementById('loading-msg');
         const content = document.getElementById('detail-content');
         
@@ -120,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(content) content.style.display = 'block';
     }
 
-    /* 5. ADAPTAR EL NAVBAR PARA CLIENTES (Código Extra) */
+    /* 5. ADAPTAR EL NAVBAR PARA CLIENTES */
     const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
 
     if (usuarioActual && usuarioActual.rol === 'cliente') {
@@ -139,3 +186,19 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'index.html';
     };
 });
+
+/* =============================================================
+   6. FUNCIÓN NUEVA: IR A PAGAR
+============================================================= */
+window.irAPagar = () => {
+    // Verificar si está logueado
+    const usuario = localStorage.getItem('usuarioActual');
+    if (!usuario) {
+        // Si no está logueado, alertar y mandar al login
+        alert("Debes iniciar sesión para reservar este viaje.");
+        window.location.href = "login.html";
+    } else {
+        // Si está logueado, ir a la pasarela de pago
+        window.location.href = "pago.html";
+    }
+};

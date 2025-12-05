@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realizar Pago - TravelTrux</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo-container">
+                <img src="logo Travel.png" alt="TravelTrux" class="nav-logo">
+                <span class="brand-name">TRAVELTRUX</span>
+            </div>
+            <div class="nav-links">
+                <a href="cliente.html">Cancelar y Volver</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="packages-container">
+        <div class="section-header">
+            <h1>Finalizar Compra 💳</h1>
+            <p>Completa tus datos para asegurar tu reserva.</p>
+        </div>
+
+        <div class="admin-grid"> <section class="card">
+                <h3 style="color: var(--blue-dark); margin-bottom: 20px;">Datos de la Tarjeta</h3>
+                
+                <form id="payment-form">
+                    <div class="form-group">
+                        <label>Nombre en la tarjeta</label>
+                        <input type="text" id="card-name" placeholder="Como aparece en el plástico" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Número de Tarjeta</label>
+                        <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>Expiración (MM/AA)</label>
+                            <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="password" id="card-cvv" placeholder="123" maxlength="3" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; margin-top: 20px;">
+                        Pagar S/ <span id="btn-amount">0.00</span>
+                    </button>
+                </form>
+            </section>
+
+            <section class="card" style="background-color: #f8f9fa; border: 1px solid #e0e0e0;">
+                <h3 style="color: var(--blue-dark); margin-bottom: 20px;">Resumen del Viaje</h3>
+                
+                <img id="summary-img" src="" alt="Destino" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                
+                <h4 id="summary-title" style="margin-bottom: 5px;">Cargando...</h4>
+                <p id="summary-subtitle" style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">...</p>
+                
+                <hr style="border: 0; border-top: 1px solid #ddd; margin: 15px 0;">
+                
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>Precio Base:</span>
+                    <span id="summary-price">S/ 0.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--success-dark);">
+                    <span>Impuestos incluidos:</span>
+                    <span>S/ 0.00</span>
+                </div>
+                
+                <hr style="border: 0; border-top: 1px solid #ddd; margin: 15px 0;">
+                
+                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; color: var(--blue-dark);">
+                    <span>Total a Pagar:</span>
+                    <span id="summary-total">S/ 0.00</span>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="pago.js"></script>
+</body>
+</html>
