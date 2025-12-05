@@ -4,39 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial de Viajes - Travel Trux</title>
-    
+
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header>
+    <header class="site-header">
         <nav class="navbar">
             <div class="logo-container">
                 <img src="logo Travel.png" alt="TravelTrux" class="nav-logo">
                 <span class="brand-name">TRAVELTRUX</span>
             </div>
-            
+
             <div class="nav-links">
-                <a href="index.html">Inicio</a>
-                <a href="cliente.html">Mi Panel</a>
-                <a href="#" class="active">Mis Viajes</a> <button class="nav-btn" onclick="cerrarSesion()">Cerrar Sesión</button>
+                <div class="nav-link-item"><a href="index.html">Inicio</a></div>
+                <div class="nav-link-item"><a href="cliente.html">Mi Panel</a></div>
+                <div class="nav-link-item"><a href="#" class="active">Mis Viajes</a></div>
+
+                <button 
+                    class="nav-btn" 
+                    type="button" 
+                    onclick="cerrarSesion()">Cerrar Sesión</button>
             </div>
         </nav>
     </header>
 
     <main class="history-container">
         <h1>Mi Historial de Viajes</h1>
-        
+
         <div id="trips-list" class="trips-list">
             <p>Cargando viajes...</p>
         </div>
     </main>
 
     <script src="history.js"></script>
-    
+
     <script>
-        // Función para cerrar sesión
+        // Función para cerrar sesión (Sin cambios, ya estaba bien)
         function cerrarSesion() {
             localStorage.removeItem('usuarioActual'); // Borra la sesión
             window.location.href = 'index.html';      // Te manda al inicio

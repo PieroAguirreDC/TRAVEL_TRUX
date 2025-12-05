@@ -6,35 +6,162 @@
     <title>Panel Empleado - TravelTrux</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="empleado.css">
 </head>
-<body>
-    <header style="background-color: #2c3e50;"> <nav class="navbar">
-            <div class="logo-container">
-                <img src="logo Travel.png" alt="TravelTrux" class="nav-logo">
-                <span class="brand-name">EMPLEADO</span>
-            </div>
-            <div class="nav-links">
-                <button class="nav-btn" onclick="cerrarSesion()">Cerrar Sesión</button>
-            </div>
-        </nav>
-    </header>
-
-    <main class="packages-container">
-        <div class="section-header">
-            <h1>Panel de Gestión</h1>
-            <p>Bienvenido al área de empleados.</p>
+<body class="empleado-panel">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-user-tie"></i> Empleado</h2>
         </div>
-        <div style="text-align: center; padding: 50px;">
-            <h2>🚧 Tareas Pendientes</h2>
-            <p>Selecciona una opción del menú para comenzar.</p>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link active" id="createTripLink">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Crear Viajes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" id="listTripsLink">
+                    <i class="fas fa-list"></i>
+                    <span>Listar Viajes</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="logout-section">
+            <button type="button" class="btn-logout" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="header">
+            <h1>Panel de Gestión de Viajes</h1>
+            <p>Bienvenido al área de empleados. Aquí puedes gestionar los viajes de la empresa.</p>
+        </div>
+
+        <div class="main-container">
+            <div id="createTripSection" class="management-panels">
+                <div class="panel">
+                    <h2><i class="fas fa-plus-circle"></i> Crear Nuevo Viaje</h2>
+                    <form id="tripForm">
+                        <div class="form-group">
+                            <label for="title">Título del viaje</label>
+                            <input type="text" id="title" placeholder="Ej: Viaje a Lima - Transporte de pasajeros" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date">Fecha y hora</label>
+                            <div class="datetime-input">
+                                <input type="date" id="date" required>
+                                <input type="time" id="time" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="destination">Destino</label>
+                            <input type="text" id="destination" placeholder="Ej: Lima, Perú" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vehicle">Vehículo asignado</label>
+                            <select id="vehicle" required>
+                                <option value="">Seleccionar vehículo</option>
+                                <option value="bus_1">Bus Mercedes Benz O500</option>
+                                <option value="bus_2">Bus Volvo B340</option>
+                                <option value="bus_3">Bus Scania K-series</option>
+                                <option value="microbus_1">Microbús Toyota Coaster</option>
+                                <option value="microbus_2">Microbús Mercedes Sprinter</option>
+                                <option value="microbus_3">Microbús Ford Transit</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Resumen sobre el viaje</label>
+                            <textarea id="description" placeholder="Describe los detalles del viaje, ruta, observaciones importantes..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-add">
+                            <i class="fas fa-save"></i>
+                            Guardar Viaje
+                        </button>
+                    </form>
+                </div>
+
+                <div class="panel">
+                    <h2><i class="fas fa-road"></i> Próximos Viajes</h2>
+                    <ul id="upcomingTripsList" class="trips-list">
+                        </ul>
+                </div>
+            </div>
+
+            <div id="listTripsSection" class="panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-list"></i> Todos los Viajes</h2>
+                    <div class="filter-buttons">
+                        <button type="button" class="btn-filter active" id="filterAll">Todos</button>
+                        <button type="button" class="btn-filter" id="filterUpcoming">Próximos</button>
+                        <button type="button" class="btn-filter" id="filterCompleted">Completados</button>
+                    </div>
+                </div>
+                <ul id="allTripsList" class="trips-list">
+                    </ul>
+            </div>
         </div>
     </main>
 
-    <script>
-        function cerrarSesion() {
-            localStorage.removeItem('usuarioActual');
-            window.location.href = 'index.html';
-        }
-    </script>
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-edit"></i> Editar Viaje</h2>
+            <form id="editForm">
+                <div class="form-group">
+                    <label for="editTitle">Título del viaje</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editDate">Fecha y hora</label>
+                    <div class="datetime-input">
+                        <input type="date" id="editDate" required>
+                        <input type="time" id="editTime" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editDestination">Destino</label>
+                    <input type="text" id="editDestination" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editVehicle">Vehículo asignado</label>
+                    <select id="editVehicle" required>
+                        <option value="">Seleccionar vehículo</option>
+                        <option value="bus_1">Bus Mercedes Benz O500</option>
+                        <option value="bus_2">Bus Volvo B340</option>
+                        <option value="bus_3">Bus Scania K-series</option>
+                        <option value="microbus_1">Microbús Toyota Coaster</option>
+                        <option value="microbus_2">Microbús Mercedes Sprinter</option>
+                        <option value="microbus_3">Microbús Ford Transit</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editDescription">Resumen sobre el viaje</label>
+                    <textarea id="editDescription" required></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancelEditBtn">Cancelar</button>
+                    <button type="submit" class="btn-save">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="empleado.js"></script>
 </body>
 </html>

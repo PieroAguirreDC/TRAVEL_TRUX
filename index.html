@@ -17,36 +17,36 @@
                 <span class="brand-name">TRAVELTRUX</span>
             </div>
             <div class="nav-links">
-                <button class="nav-btn active" onclick="window.location.href='index.html'">Inicio</button>
-                <button class="nav-btn" onclick="window.location.href='paquetes.html'">Paquetes</button>
-                <button class="nav-btn" onclick="window.location.href='login.html'">Iniciar Sesión</button>
-                <button class="nav-btn" onclick="window.location.href='register.html'">Registrarse</button>
+                <button type="button" class="nav-btn active" onclick="window.location.href='index.html'">Inicio</button>
+                <button type="button" class="nav-btn" onclick="window.location.href='paquetes.html'">Paquetes</button>
+                <button type="button" class="nav-btn" onclick="window.location.href='login.html'">Iniciar Sesión</button>
+                <button type="button" class="nav-btn" onclick="window.location.href='register.html'">Registrarse</button>
             </div>
         </nav>
     </header>
 
     <main>
         <div id="bienvenida-view" class="view active">
-            
-            <div class="card" style="display:flex; align-items:center; gap:30px; justify-content:space-between; flex-wrap:wrap;">
-                <div style="max-width:55%;">
+
+            <div class="card card-container">
+                <div class="card-content">
                     <h1>Bienvenido a <span>TravelTrux</span></h1>
-                    <p style="font-size:17px; line-height:1.5; color: var(--gray-dark);">
+                    <p class="welcome-text">
                         Descubre destinos increíbles, compra paquetes turísticos y vive experiencias únicas por todo el Perú.
                     </p>
                     <br>
-                    <button class="btn btn-primary" onclick="window.location.href='paquetes.html'">Ver todas las ofertas</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='paquetes.html'">Ver todas las ofertas</button>
                 </div>
-                <img src="logo Travel.png" alt="Logo TravelTrux" style="width:160px; height:auto; object-fit:contain;">
+                <img src="logo Travel.png" alt="Logo TravelTrux" class="card-image">
             </div>
 
-            <div style="margin-top: 50px;">
-                <h2 style="text-align: center; color: var(--blue-dark); margin-bottom: 30px; font-size: 2rem;">
+            <div class="section-header-highlight">
+                <h2>
                     🔥 Destinos Destacados
                 </h2>
-                
+
                 <div id="destacados-grid" class="packages-grid">
-                    </div>
+                </div>
             </div>
 
         </div>
