@@ -1,73 +1,87 @@
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. BASE DE DATOS DE USUARIOS (Simulada)
-    // Aquí definimos quiénes pueden entrar y qué rol tienen
-    const usuariosRegistrados = [
-        {
-            email: "admin@traveltrux.com",
-            password: "123",
-            nombre: "Administrador Principal",
-            rol: "admin" // Rol: Administrador
-        },
-        {
-            email: "empleado@traveltrux.com",
-            password: "123",
-            nombre: "Sonia Caipo",
-            rol: "empleado" // Rol: Empleado
-        },
-        {
-            email: "cliente@gmail.com",
-            password: "123",
-            nombre: "Cliente Viajero",
-            rol: "cliente" // Rol: Cliente
-        },
-        // Puedes agregar tu correo personal si quieres probar como cliente
-        {
-            email: "pierogaguirredc@gmail.com",
-            password: "123",
-            nombre: "Piero Aguirre",
-            rol: "cliente"
-        }
-    ];
+// -------------------------------------------------------------
+// LOGIN.JS - TravelTrux
+// Manejo de inicio de sesión para Admin, Empleados y Clientes
+// -------------------------------------------------------------
 
-    // 2. DETECTAR EL ENVÍO DEL FORMULARIO
-    const loginForm = document.getElementById('loginForm');
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
 
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Evita que la página se recargue
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-        const emailInput = document.getElementById('email').value;
-        const passwordInput = document.getElementById('password').value;
+    // ---------------------------------------------------------
+    // 1. Validar ADMIN
+    // ---------------------------------------------------------
+    if (email === "admin@traveltrux.com" && password === "admin") {
+        localStorage.setItem("usuario", JSON.stringify({
+            rol: "admin",
+            email: email
+        }));
+        window.location.href = "admin.html";
+        return;
+    }
 
-        // 3. BUSCAR USUARIO
-        const usuarioEncontrado = usuariosRegistrados.find(
-            user => user.email === emailInput && user.password === passwordInput
-        );
+    // ---------------------------------------------------------
+    // 2. Validar EMPLEADO desde localStorage
+    // ---------------------------------------------------------
+    const empleados = JSON.parse(localStorage.getItem("empleados") || "[]");
 
-        if (usuarioEncontrado) {
-            // A) Guardar sesión en el navegador
-            localStorage.setItem('usuarioActual', JSON.stringify(usuarioEncontrado));
+    const empleado = empleados.find(emp =>
+        emp.email === email && emp.password === password
+    );
 
-            // B) Redireccionar según el ROL
-            alert(`¡Bienvenido/a ${usuarioEncontrado.nombre}!`);
+    if (empleado) {
+        localStorage.setItem("usuario", JSON.stringify({
+            rol: "empleado",
+            id: empleado.id,
+            email: empleado.email,
+            nombre: empleado.nombre
+        }));
 
-            switch (usuarioEncontrado.rol) {
-                case 'admin':
-                    window.location.href = 'admin.html';
-                    break;
-                case 'empleado':
-                    window.location.href = 'empleado.html'; // Asegúrate de tener este archivo
-                    break;
-                case 'cliente':
-                    window.location.href = 'cliente.html';
-                    break;
-                default:
-                    window.location.href = 'index.html';
-            }
+        window.location.href = "empleado.html";
+        return;
+    }
 
-        } else {
-            // C) Error
-            alert('❌ Correo o contraseña incorrectos.');
-        }
-    });
+    // ---------------------------------------------------------
+    // 3. Validar CLIENTE desde localStorage
+    // ---------------------------------------------------------
+    const clientes = JSON.parse(localStorage.getItem("clientes") || "[]");
+
+    const cliente = clientes.find(cli =>
+        cli.correo === email && cli.password === password
+    );
+
+    if (cliente) {
+        localStorage.setItem("usuario", JSON.stringify({
+            rol: "cliente",
+            id: cliente.id,
+            email: cliente.correo,
+            nombre: cliente.nombre
+        }));
+
+        window.location.href = "cliente.html";
+        return;
+    }
+
+    // ---------------------------------------------------------
+    // 4. Si no existe ningún usuario
+    // ---------------------------------------------------------
+    alert("Correo o contraseña incorrectos.");
 });
+
+
+// -------------------------------------------------------------
+// BOTÓN “OLVIDÉ MI CONTRASEÑA”
+// -------------------------------------------------------------
+
+// Crear dinámicamente el botón debajo del formulario
+const form = document.getElementById("loginForm");
+
+const btnOlvide = document.createElement("p");
+btnOlvide.innerHTML = `
+    <a href="recuperar.html" style="display:block; margin-top:10px; text-align:center; color:#0056b3; font-weight:600; cursor:pointer;">
+        Olvidé mi contraseña
+    </a>
+`;
+
+form.insertAdjacentElement("afterend", btnOlvide);

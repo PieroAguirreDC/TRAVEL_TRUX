@@ -3,86 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administración - TravelTrux</title>
+    <title>Panel Administrador - TravelTrux</title>
+
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-    <header style="background-color: #1a252f;">
+    <!-- ========================= -->
+    <!-- NAVBAR SUPERIOR -->
+    <!-- ========================= -->
+    <header style="background-color:#1a252f;">
         <nav class="navbar">
+
             <div class="logo-container">
                 <img src="logo Travel.png" alt="TravelTrux" class="nav-logo">
                 <span class="brand-name">ADMINISTRADOR</span>
             </div>
+
             <div class="nav-links">
-                <a href="#" class="active">Reembolsos</a>
-                <button class="nav-btn" onclick="cerrarSesion()" style="background-color: #c0392b !important;">Salir</button>
+                <button class="nav-btn btn-menu" data-target="seccion-reembolsos">Reembolsos</button>
+                <button class="nav-btn btn-menu" data-target="seccion-clientes">Listar Clientes</button>
+                <button class="nav-btn btn-menu" data-target="seccion-empleados">Listar Empleados</button>
+                <button class="nav-btn btn-menu" data-target="seccion-registro-empleado">Registrar Empleado</button>
+
+                <button class="nav-btn" onclick="cerrarSesion()" style="background-color:#c0392b;">
+                    Salir
+                </button>
             </div>
         </nav>
     </header>
 
+    <!-- ========================= -->
+    <!-- CONTENIDO -->
+    <!-- ========================= -->
     <main class="packages-container">
-        
-        <div class="section-header">
-            <h1 style="color: #0F375A; font-weight: 800;">Gestión de Reembolsos</h1>
-            <p style="color: #555;">Control contable de devoluciones (TRAV-3)</p>
+
+        <!-- =================================================== -->
+        <!-- SECCIÓN REEMBOLSOS -->
+        <!-- =================================================== -->
+        <div id="seccion-reembolsos" class="seccion">
+
+            <h1 style="color:#0F375A; font-weight:800; margin-top:20px;">Gestión de Reembolsos</h1>
+            <p style="color:#555;">Control contable de devoluciones</p>
+
+            <div class="admin-grid">
+
+                <!-- FORMULARIO -->
+                <section class="card admin-form-card">
+                    <h3 style="margin-bottom: 15px; color:#0F375A;">📝 Registrar Nuevo</h3>
+
+                    <form id="form-reembolso">
+
+                        <div class="form-group">
+                            <label>Cliente:</label>
+                            <input type="text" id="cliente" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Monto (S/):</label>
+                            <input type="number" id="monto" step="0.01" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Motivo:</label>
+                            <input type="text" id="motivo" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width:100%;">
+                            Guardar
+                        </button>
+
+                    </form>
+                </section>
+
+                <!-- TABLA HISTORIAL -->
+                <section class="card admin-table-card">
+                    <h3 style="margin-bottom:15px; color:#0F375A;">📋 Historial</h3>
+
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Monto</th>
+                                <th>Motivo</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tabla-body"></tbody>
+                    </table>
+                </section>
+            </div>
         </div>
 
-        <div class="admin-grid">
-            
-            <section class="card admin-form-card">
-                <h3 style="margin-bottom: 15px; color: #0F375A;">📝 Registrar Nuevo</h3>
-                
-                <form id="form-reembolso">
-                    <div style="margin-bottom: 15px;">
-                        <label style="display:block; font-weight:600; margin-bottom:5px; color:#0F375A;">Cliente:</label>
-                        <input type="text" id="cliente" placeholder="Nombre completo" required 
-                               style="width: 100%; padding: 10px; border: 2px solid #1F82C0; border-radius: 6px;">
-                    </div>
+        <!-- =================================================== -->
+        <!-- SECCIÓN CLIENTES -->
+        <!-- =================================================== -->
+        <div id="seccion-clientes" class="seccion" style="display:none;">
+            <h1 style="color:#0F375A; margin-top:20px;">Clientes Registrados</h1>
 
-                    <div style="margin-bottom: 15px;">
-                        <label style="display:block; font-weight:600; margin-bottom:5px; color:#0F375A;">Monto (S/):</label>
-                        <input type="number" id="monto" placeholder="0.00" step="0.01" required
-                               style="width: 100%; padding: 10px; border: 2px solid #1F82C0; border-radius: 6px;">
-                    </div>
-
-                    <div style="margin-bottom: 20px;">
-                        <label style="display:block; font-weight:600; margin-bottom:5px; color:#0F375A;">Motivo:</label>
-                        <input type="text" id="motivo" placeholder="Causa de devolución" required
-                               style="width: 100%; padding: 10px; border: 2px solid #1F82C0; border-radius: 6px;">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" style="width: 100%; font-weight:bold;">Guardar</button>
-                </form>
-            </section>
-
-            <section class="card admin-table-card">
-                <h3 style="margin-bottom: 15px; color: #0F375A;">📋 Historial</h3>
-                
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Cliente</th>
-                            <th>Monto</th>
-                            <th>Motivo</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-body">
-                        </tbody>
-                </table>
-            </section>
-
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-clientes-body"></tbody>
+            </table>
         </div>
+
+        <!-- =================================================== -->
+        <!-- SECCIÓN EMPLEADOS -->
+        <!-- =================================================== -->
+        <div id="seccion-empleados" class="seccion" style="display:none;">
+            <h1 style="color:#0F375A; margin-top:20px;">Empleados Registrados</h1>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-empleados-body"></tbody>
+            </table>
+        </div>
+
+        <!-- =================================================== -->
+        <!-- SECCIÓN REGISTRAR EMPLEADO -->
+        <!-- =================================================== -->
+        <div id="seccion-registro-empleado" class="seccion" style="display:none;">
+
+            <h1 style="color:#0F375A; margin-top:20px;">Registrar Empleado</h1>
+
+            <form id="form-registro-empleado" class="card admin-form-card">
+
+                <div class="form-group">
+                    <label>DNI:</label>
+                    <input type="text" id="reg-dni" maxlength="8" required>
+                    <span id="dni-error" style="font-size:14px; font-weight:600;"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" id="reg-nombre" readonly required>
+                </div>
+
+                <div class="form-group">
+                    <label>Apellido:</label>
+                    <input type="text" id="reg-apellido" readonly required>
+                </div>
+
+                <div class="form-group">
+                    <label>Correo:</label>
+                    <input type="email" id="reg-email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" id="reg-password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width:100%;">
+                    Registrar
+                </button>
+
+            </form>
+        </div>
+
     </main>
 
+    <!-- ========================= -->
+    <!-- JS -->
+    <!-- ========================= -->
     <script src="admin.js"></script>
-    <script>
-        function cerrarSesion() {
-            localStorage.removeItem('usuarioActual');
-            window.location.href = 'index.html';
-        }
-    </script>
+
 </body>
 </html>
